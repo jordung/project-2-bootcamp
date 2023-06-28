@@ -6,7 +6,7 @@ import Homepage from "./pages/Homepage";
 import Messages from "./pages/Messages";
 import Search from "./pages/Search";
 import Notifications from "./pages/Notifications";
-import Login from "./Components/Login";
+import Login from "./pages/Login";
 
 function App() {
   return (
