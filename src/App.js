@@ -1,16 +1,19 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Homepage from "./pages/Homepage";
 import Messages from "./pages/Messages";
 import Search from "./pages/Search";
 import Notifications from "./pages/Notifications";
+import Login from "./Components/Login";
 
 function App() {
   return (
     <div>
+      <Link to="login">Temporary</Link>
       <Routes>
+        <Route path="login" element={<Login />} />
         <Route path="home" element={<Homepage />} />
         <Route path="messages" element={<Messages />} />
         <Route path="search" element={<Search />} />
