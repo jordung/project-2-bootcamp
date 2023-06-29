@@ -6,69 +6,85 @@ import {
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [user, setUser] = useState({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user);
-        setIsLoggedIn(true);
-        setUser(user);
-      } else {
-        setIsLoggedIn(false);
-        setUser({});
-      }
-    });
-  }, []);
-
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCred) => {
-        console.log("logged in!");
-        console.log(userCred.email);
-      })
-      .catch((err) => {
-        alert(err, " - There was an error");
-      });
+  const handleLogin = async () => {
+    console.log("logging in...");
+    const user = await signInWithEmailAndPassword(auth, email, password);
+    console.log(user);
+    setEmail("");
+    setPassword("");
+    navigate("/home");
+    // })
+    // .catch((err) => {
+    //   alert(err, " - There was an error");
+    // });
   };
 
-  const handleRegister = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCred) => {
-        console.log("signed in!");
-        console.log(userCred);
-      })
-      .catch((err) => console.log(err));
+  const handleRegister = async () => {
+    console.log("signing up...");
+    if (email && password) {
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCred) => {
+          console.log("signed in!");
+          console.log(userCred);
+          setEmail("");
+          setPassword("");
+          navigate("/home");
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
-    <div>
-      <input
-        value={email}
-        name="email"
-        type="text"
-        placeholder="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        value={password}
-        name="password"
-        type="text"
-        placeholder="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br />
-      <br />
-      <button onClick={handleLogin}>Login</button>
-      <br />
-      <br />
-      <br />
-      <button onClick={handleRegister}>Register</button>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
+        <h2 className="text-3xl mb-5 font-bold">Login</h2>
+        <div className="w-72">
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            Email
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
+            value={email}
+            required
+            name="email"
+            type="email"
+            placeholder="chandler.bing@gmail.com"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="w-72 mt-5">
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            Password
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
+            value={password}
+            name="password"
+            type="password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button
+          className="text-white w-44 bg-orange-400 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mt-5 mb-2"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+        <button
+          className="text-gray-500 underline text-sm"
+          onClick={handleRegister}
+        >
+          <p>Don't have an account? Register now.</p>
+        </button>
+      </div>
     </div>
   );
 };

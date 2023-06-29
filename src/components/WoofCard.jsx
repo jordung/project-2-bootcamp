@@ -3,7 +3,7 @@ import { GoShare, GoComment, GoGitCompare, GoFlame } from "react-icons/go";
 
 function WoofCard(props) {
   return (
-    <li className="py-3 px-2">
+    <li className="py-3 px-5">
       <div className="flex items-start flex-col">
         <div className="flex items-start">
           <img
