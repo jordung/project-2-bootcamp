@@ -8,12 +8,16 @@ function Homepage() {
   return (
     <div className="bg-white min-h-screen flex flex-col justify-start items-start">
       {/* header logo bar */}
-      <div className="flex justify-center w-screen items-center h-16">
-        <img className="w-12 h-12 py-2 px-2" src={logo} alt="Woofly Logo" />
+      <div className="flex justify-center w-screen items-center h-16 md:justify-start md:hidden">
+        <img
+          className="w-12 h-12 py-2 px-2 md:w-20 md:h-20 md:m-8"
+          src={logo}
+          alt="Woofly Logo"
+        />
       </div>
 
       {/* woof card container */}
-      <div className="w-full max-w-md px-2 bg-white border border-gray-200">
+      <div className="w-full px-2 bg-white border border-gray-200 md:w-3/5 md:ml-60">
         <div className="flow-root">
           <ul className="divide-y divide-gray-200">
             <WoofCard
