@@ -11,6 +11,7 @@ import Messages from "./pages/Messages";
 import Search from "./pages/Search";
 import Notifications from "./pages/Notifications";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 export const UserContext = createContext({});
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="messages" element={<Messages />} />
           <Route path="search" element={<Search />} />
           <Route path="notifications" element={<Notifications />} />
+          <Route path="profile" element={<Profile />} />
         </Routes>
         <Navbar />
       </UserContext.Provider>
