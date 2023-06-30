@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +11,13 @@ const Register = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    if (user.email) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleRegister = async () => {
     console.log("signing up...");
@@ -122,6 +125,12 @@ const Register = () => {
           onClick={handleRegister}
         >
           Register
+        </button>
+        <button
+          className="text-gray-500 underline text-sm"
+          onClick={() => navigate("/login")}
+        >
+          <p>Have an account? Back to Login</p>
         </button>
       </div>
     </div>
