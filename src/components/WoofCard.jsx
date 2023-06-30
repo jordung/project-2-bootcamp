@@ -16,11 +16,11 @@ function WoofCard(props) {
               <p className="text-md mx-5 font-medium text-gray-900">
                 {props.name}
               </p>
-              <p className="text-sm mr-5 text-gray-500">{props.userName}</p>
-              <p className="text-sm mr-5 text-gray-500">
+              <p className="text-sm mr-3 text-gray-500">{props.userName}</p>
+              <p className="text-sm mr-3 text-gray-500">
                 <BsDot />
               </p>
-              <p className="text-sm mr-5 text-gray-500">{props.dateTime}</p>
+              <p className="text-sm mr-3 text-gray-500">{props.dateTime}</p>
             </div>
             <p className="text-gray-900 ml-5">{props.content}</p>
             {props.image && (
