@@ -1,12 +1,18 @@
-import { GoHome, GoSearch, GoBell, GoMail } from "react-icons/go";
+import { GoHome, GoSearch, GoBell, GoMail, GoSignOut } from "react-icons/go";
+
 import { FaPaw } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 import logo from "../assets/woofly-logo2.png";
 import { useLocation } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ handleSignOut }) {
   const location = useLocation();
-  if (location.pathname === "/" || location.pathname === "/login") {
+  if (
+    location.pathname === "/" ||
+    location.pathname === "/login" ||
+    location.pathname === "/register"
+  ) {
     return null;
   }
 
@@ -45,6 +51,16 @@ function Navbar() {
           <GoMail className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
           <p className="hidden md:inline-block text-md font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
             Search
+          </p>
+        </Link>
+        <Link
+          to="/"
+          className="flex items-center gap-2 group"
+          onClick={() => handleSignOut()}
+        >
+          <GoSignOut className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
+          <p className="hidden md:inline-block text-md font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+            Sign Out
           </p>
         </Link>
       </div>
