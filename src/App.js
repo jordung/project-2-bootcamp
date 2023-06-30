@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect, createContext } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
@@ -20,6 +20,8 @@ function App() {
   const [user, setUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -36,6 +38,7 @@ function App() {
   const handleSignOut = () => {
     signOut(auth).then(() => {
       console.log("Signed out :(");
+      navigate("/");
     });
   };
 
@@ -50,7 +53,10 @@ function App() {
           <Route path="messages" element={<Messages />} />
           <Route path="search" element={<Search />} />
           <Route path="notifications" element={<Notifications />} />
-          <Route path="profile" element={<Profile />} />
+          <Route
+            path="profile"
+            element={<Profile handleSignOut={handleSignOut} />}
+          />
         </Routes>
         <Navbar handleSignOut={handleSignOut} />
       </UserContext.Provider>

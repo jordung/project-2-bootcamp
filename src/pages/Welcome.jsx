@@ -12,7 +12,7 @@ function Welcome() {
     if (user.email) {
       navigate("/home");
     }
-  }, [user.email]);
+  }, [user.email, navigate]);
 
   return (
     <div className="max-sm:bg-white min-h-screen flex justify-center items-center">
@@ -29,8 +29,7 @@ function Welcome() {
           Hey, Welcome to{" "}
           <span className="md:text-3xl text-2xl py-2 bg-gradient-to-r from-orange-300 via-red-300 to-yellow-300 animate-gradient-x bg-clip-text text-transparent animate-gradient-x ease-in-out transition-all duration-300">
             Woofly
-          </span>{" "}
-          🐶
+          </span>
         </h1>
         <p className="text-md mb-1 text-gray-500 px-5 py-2 text-center">
           Connect, Share, and Explore with Woofly, the ultimate social

@@ -26,34 +26,8 @@ function Navbar({ handleSignOut }) {
           alt="Woofly Logo"
         />
       </div>
-      <div className="flex gap-10 w-full md:flex-col md:w-2/3 md:my-12">
+      <div className="flex gap-8 justify-center w-full md:flex-col md:w-2/3 md:my-12">
         {/* <Link to="login">Login/Signup</Link> */}
-
-        <Link to="home" className="flex items-center gap-2 group">
-          <GoHome className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-md font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
-            Home
-          </p>
-        </Link>
-        <Link to="search" className="flex items-center gap-2 group">
-          <GoSearch className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-md font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
-            Search
-          </p>
-        </Link>
-        <FaPaw className="h-12 w-12 text-orange-400 md:hidden" />
-        <Link to="notifications" className="flex items-center gap-2 group">
-          <GoBell className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-md font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
-            Notifications
-          </p>
-        </Link>
-        <Link to="messages" className="flex items-center gap-2 group">
-          <GoMail className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-md font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
-            Messages
-          </p>
-        </Link>
         <Link
           to="profile"
           className="hidden group md:visible md:flex md:items-center md:gap-2"
@@ -63,17 +37,43 @@ function Navbar({ handleSignOut }) {
             src={john}
             alt="profile"
           />
-          <p className="hidden md:inline-block text-md font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
             Profile
           </p>
         </Link>
+        <Link to="home" className="flex items-center gap-2 group">
+          <GoHome className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
+          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+            Home
+          </p>
+        </Link>
+        <Link to="search" className="flex items-center gap-2 group">
+          <GoSearch className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
+          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+            Search
+          </p>
+        </Link>
+        <FaPaw className="h-12 w-12 text-orange-400 md:hidden" />
+        <Link to="notifications" className="flex items-center gap-2 group">
+          <GoBell className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
+          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+            Notifications
+          </p>
+        </Link>
+        <Link to="messages" className="flex items-center gap-2 group">
+          <GoMail className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
+          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+            Messages
+          </p>
+        </Link>
+
         <Link
           to="/"
-          className="flex items-center gap-2 group"
+          className="hidden md:flex items-center gap-2 group"
           onClick={() => handleSignOut()}
         >
-          <GoSignOut className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-md font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <GoSignOut className="hidden md:inline-block md:h-8 md:w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
+          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
             Sign Out
           </p>
         </Link>
