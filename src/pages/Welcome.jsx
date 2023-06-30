@@ -1,9 +1,19 @@
 import logo from "../assets/woofly-logo2.png";
 import { useNavigate } from "react-router-dom";
 import welcomeBg from "../assets/welcome-bg.jpg";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../App";
 
 function Welcome() {
   const navigate = useNavigate();
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    if (user.email) {
+      navigate("/home");
+    }
+  }, [user.email]);
+
   return (
     <div className="max-sm:bg-white min-h-screen flex justify-center items-center">
       <div className="hidden md:inline-block h-screen w-[80vw]">

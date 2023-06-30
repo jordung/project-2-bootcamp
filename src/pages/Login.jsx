@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const user = useContext(UserContext);
+  useEffect(() => {
+    if (user.email) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleLogin = async () => {
     console.log("logging in...");
@@ -24,21 +26,6 @@ const Login = () => {
     // .catch((err) => {
     //   alert(err, " - There was an error");
     // });
-  };
-
-  const handleRegister = async () => {
-    console.log("signing up...");
-    if (email && password) {
-      await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCred) => {
-          console.log("signed in!");
-          console.log(userCred);
-          setEmail("");
-          setPassword("");
-          navigate("/home");
-        })
-        .catch((err) => console.log(err));
-    }
   };
 
   return (
@@ -80,7 +67,7 @@ const Login = () => {
         </button>
         <button
           className="text-gray-500 underline text-sm"
-          onClick={handleRegister}
+          onClick={() => navigate("/register")}
         >
           <p>Don't have an account? Register now.</p>
         </button>
