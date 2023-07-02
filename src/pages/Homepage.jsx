@@ -4,6 +4,7 @@ import WoofCard from "../components/WoofCard";
 import john from "../assets/john.jpg";
 import mary from "../assets/mary.jpg";
 import apostles from "../assets/apostles.jpeg";
+import ComposeWoof from "./ComposeWoof";
 
 function Homepage() {
   const navigate = useNavigate();
@@ -29,8 +30,13 @@ function Homepage() {
         </div>
       </div>
 
+      {/* new woof container */}
+      <div className="hidden md:inline-block md:w-3/5 md:px-2 md:bg-white border md:border-gray-200 md:rounded-xl md:ml-72 md:shadow-lg md:p-5 md:mt-10">
+        <ComposeWoof />
+      </div>
+
       {/* woof card container */}
-      <div className="w-full px-2 bg-white border border-gray-200 rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-10">
+      <div className="w-full px-2 bg-white border border-gray-200 rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-5">
         <div className="flow-root">
           <ul className="divide-y divide-gray-200">
             <WoofCard

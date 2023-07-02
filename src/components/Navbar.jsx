@@ -53,7 +53,9 @@ function Navbar({ handleSignOut }) {
             Search
           </p>
         </Link>
-        <FaPaw className="h-12 w-12 text-orange-400 md:hidden" />
+        <Link to="composeWoof" className="md:hidden">
+          <FaPaw className="h-12 w-12 text-orange-400 md:hidden" />
+        </Link>
         <Link to="notifications" className="flex items-center gap-2 group">
           <GoBell className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
           <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
