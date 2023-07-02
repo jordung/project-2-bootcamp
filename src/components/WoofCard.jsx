@@ -13,7 +13,7 @@ function WoofCard(props) {
           />
           <div>
             <div className="flex items-center">
-              <p className="text-md mx-5 font-medium text-gray-900">
+              <p className="text-sm mx-5 font-medium text-gray-900">
                 {props.name}
               </p>
               <p className="text-sm mr-3 text-gray-500">{props.userName}</p>

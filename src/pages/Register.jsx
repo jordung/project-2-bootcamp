@@ -17,7 +17,7 @@ const Register = () => {
     if (user.email) {
       navigate("/home");
     }
-  }, []);
+  }, [navigate, user.email]);
 
   const handleRegister = async () => {
     console.log("signing up...");

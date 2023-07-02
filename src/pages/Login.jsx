@@ -13,7 +13,7 @@ const Login = () => {
     if (user.email) {
       navigate("/home");
     }
-  }, []);
+  }, [navigate, user.email]);
 
   const handleLogin = async () => {
     console.log("logging in...");
