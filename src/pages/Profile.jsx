@@ -10,7 +10,7 @@ function Profile({ handleSignOut }) {
     <div className="w-full px-4 flex flex-col justify-center items-start md:border md:border-gray-200 md:rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-7 md:mt-10">
       <div className="absolute -z-10 top-0 left-0 md:relative">
         <img
-          className="object-cover w-screen h-[15vh] md:rounded-2xl"
+          className="object-cover w-screen h-[15vh] md:rounded-2xl lg:h-[25vh]"
           src={profileBanner}
           alt="profile banner"
         />

@@ -13,6 +13,7 @@ import Notifications from "./pages/Notifications";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
+import ComposeWoof from "./pages/ComposeWoof";
 
 export const UserContext = createContext({});
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="messages" element={<Messages />} />
           <Route path="search" element={<Search />} />
           <Route path="notifications" element={<Notifications />} />
+          <Route path="composeWoof" element={<ComposeWoof />} />
           <Route
             path="profile"
             element={<Profile handleSignOut={handleSignOut} />}
