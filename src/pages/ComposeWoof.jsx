@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import john from "../assets/john.jpg";
 import { GoArrowLeft, GoImage, GoTrash } from "react-icons/go";
 // import { HiOutlineGif } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 import {
   ref as storageRef,
@@ -12,9 +13,10 @@ import {
 
 import { push, ref, set } from "firebase/database";
 import { database, storage } from "../firebase";
-import { UserContext } from "../App";
 
 function ComposeWoof() {
+  const { user, username } = useContext(UserContext);
+
   const [textInput, setTextInput] = useState("");
   const [inputCounter, setInputCounter] = useState(280);
   const [imageInput, setImageInput] = useState(null);
@@ -23,8 +25,6 @@ function ComposeWoof() {
 
   const DB_WOOFS_KEY = "woofs";
   const STORAGE_KEY = "images/";
-
-  const user = useContext(UserContext);
 
   const handleChange = (e) => {
     setTextInput(e.target.value);
@@ -82,9 +82,9 @@ function ComposeWoof() {
       <div className="flex items-start gap-5">
         <div>
           <img
-            src={john}
+            src={user.photoURL}
             alt="profile"
-            className="h-16 w-16 object-cover rounded-full"
+            className="h-16 w-16 object-cover rounded-full md:h-auto"
           />
         </div>
         <div className="md:w-full">

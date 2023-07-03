@@ -6,10 +6,11 @@ import mary from "../assets/mary.jpg";
 import apostles from "../assets/apostles.jpeg";
 import ComposeWoof from "./ComposeWoof";
 import { useContext } from "react";
-import { WoofsContext } from "../App";
+import { UserContext, WoofsContext } from "../App";
 import { formatDistanceToNow } from "date-fns";
 
 function Homepage() {
+  const { user, username } = useContext(UserContext);
   const navigate = useNavigate();
   const woofs = useContext(WoofsContext);
 
@@ -29,7 +30,7 @@ function Homepage() {
         >
           <img
             className="inline-block h-8 w-8 rounded-full shadow md:hidden"
-            src={john}
+            src={user.photoURL}
             alt="profile"
           />
         </div>

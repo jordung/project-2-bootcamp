@@ -1,18 +1,19 @@
 import { GoHome, GoSearch, GoBell, GoMail, GoSignOut } from "react-icons/go";
-
 import { FaPaw } from "react-icons/fa";
-
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../App";
 import logo from "../assets/woofly-logo2.png";
-import { useLocation } from "react-router-dom";
-import john from "../assets/john.jpg";
 
 function Navbar({ handleSignOut }) {
+  const { user, username } = useContext(UserContext);
+
   const location = useLocation();
   if (
     location.pathname === "/" ||
     location.pathname === "/login" ||
-    location.pathname === "/register"
+    location.pathname === "/register" ||
+    location.pathname === "/newProfile"
   ) {
     return null;
   }
@@ -34,7 +35,7 @@ function Navbar({ handleSignOut }) {
         >
           <img
             className="hidden md:inline-block md:h-8 md:w-8 md:rounded-full md:shadow md:group-hover:ring-2 md:group-hover:ring-orange-400 md:transition md:duration-300"
-            src={john}
+            src={user.photoURL}
             alt="profile"
           />
           <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
