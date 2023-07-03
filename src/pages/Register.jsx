@@ -63,7 +63,7 @@ const Register = () => {
             name="lastname"
             type="text"
             placeholder="bing"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="w-72 mt-5">
