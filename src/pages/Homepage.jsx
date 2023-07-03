@@ -5,8 +5,11 @@ import john from "../assets/john.jpg";
 import mary from "../assets/mary.jpg";
 import apostles from "../assets/apostles.jpeg";
 import ComposeWoof from "./ComposeWoof";
+import { useContext } from "react";
+import { UserContext } from "../App";
 
 function Homepage() {
+  const { user, username } = useContext(UserContext);
   const navigate = useNavigate();
 
   return (
@@ -24,7 +27,7 @@ function Homepage() {
         >
           <img
             className="inline-block h-8 w-8 rounded-full shadow md:hidden"
-            src={john}
+            src={user.photoURL}
             alt="profile"
           />
         </div>
