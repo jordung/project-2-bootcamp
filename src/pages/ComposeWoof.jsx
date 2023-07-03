@@ -1,13 +1,30 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import john from "../assets/john.jpg";
 import { GoArrowLeft, GoImage, GoTrash } from "react-icons/go";
 // import { HiOutlineGif } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+
+import { push, ref, set } from "firebase/database";
+import { database, storage } from "../firebase";
+import { UserContext } from "../App";
+
 function ComposeWoof() {
   const [textInput, setTextInput] = useState("");
   const [inputCounter, setInputCounter] = useState(280);
   const [imageInput, setImageInput] = useState(null);
+  const [imageName, setImageName] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+
+  const DB_WOOFS_KEY = "woofs";
+  const STORAGE_KEY = "images/";
+
+  const user = useContext(UserContext);
 
   const handleChange = (e) => {
     setTextInput(e.target.value);
@@ -17,11 +34,39 @@ function ComposeWoof() {
     setInputCounter(280 - textInput.length);
   }, [textInput]);
 
+  const writeData = (url) => {
+    const woofRef = ref(database, DB_WOOFS_KEY);
+    const newWoofRef = push(woofRef);
+
+    set(newWoofRef, {
+      user: user.email, // we'll need to change this to be the username instead
+      woof: textInput,
+      date: new Date().toLocaleString(),
+      url: url,
+    });
+
+    setTextInput("");
+    setImageInput(null);
+    setImageName("");
+    setImageFile(null);
+  };
+
   const handleSubmit = () => {
     console.log(textInput);
     console.log(imageInput);
-    setTextInput("");
-    setImageInput(null);
+
+    if (!imageInput) {
+      //post woof without image
+      writeData(null);
+    } else {
+      const fullStorageRef = storageRef(storage, STORAGE_KEY + imageName);
+
+      uploadBytes(fullStorageRef, imageFile).then((snapshot) => {
+        getDownloadURL(fullStorageRef).then((url) => {
+          writeData(url);
+        });
+      });
+    }
   };
 
   return (
@@ -88,7 +133,11 @@ function ComposeWoof() {
               accept="image/*"
               onChange={(e) => {
                 console.log(e.target.files[0]);
-                setImageInput(URL.createObjectURL(e.target.files[0]));
+                if (e.target.files) {
+                  setImageName(e.target.files[0].name);
+                  setImageFile(e.target.files[0]);
+                  setImageInput(URL.createObjectURL(e.target.files[0]));
+                }
               }}
             />
           </div>

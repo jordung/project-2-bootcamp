@@ -1,5 +1,5 @@
 import "./App.css";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect, createContext } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
@@ -14,23 +14,34 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import ComposeWoof from "./pages/ComposeWoof";
+import { onChildAdded, ref } from "firebase/database";
+import { database } from "./firebase";
 
 export const UserContext = createContext({});
+export const WoofsContext = createContext({});
 
 function App() {
   const [user, setUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [woofs, setWoofs] = useState([]);
 
   const navigate = useNavigate();
+  const DB_WOOFS_KEY = "woofs";
 
   useEffect(() => {
+    const woofsRef = ref(database, DB_WOOFS_KEY);
+
+    onChildAdded(woofsRef, (data) => {
+      setWoofs((prevwoofs) => [
+        ...prevwoofs,
+        { key: data.key, val: data.val() },
+      ]);
+    });
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user);
-        setIsLoggedIn(true);
         setUser(user);
       } else {
-        setIsLoggedIn(false);
         setUser({});
       }
     });
@@ -46,21 +57,23 @@ function App() {
   return (
     <div>
       <UserContext.Provider value={user}>
-        <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="home" element={<Homepage />} />
-          <Route path="messages" element={<Messages />} />
-          <Route path="search" element={<Search />} />
-          <Route path="notifications" element={<Notifications />} />
-          <Route path="composeWoof" element={<ComposeWoof />} />
-          <Route
-            path="profile"
-            element={<Profile handleSignOut={handleSignOut} />}
-          />
-        </Routes>
-        <Navbar handleSignOut={handleSignOut} />
+        <WoofsContext.Provider value={woofs}>
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="home" element={<Homepage />} />
+            <Route path="messages" element={<Messages />} />
+            <Route path="search" element={<Search />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="composeWoof" element={<ComposeWoof />} />
+            <Route
+              path="profile"
+              element={<Profile handleSignOut={handleSignOut} />}
+            />
+          </Routes>
+          <Navbar handleSignOut={handleSignOut} />
+        </WoofsContext.Provider>
       </UserContext.Provider>
     </div>
   );
