@@ -7,6 +7,7 @@ import apostles from "../assets/apostles.jpeg";
 import ComposeWoof from "./ComposeWoof";
 import { useContext } from "react";
 import { WoofsContext } from "../App";
+import { formatDistanceToNow } from "date-fns";
 
 function Homepage() {
   const navigate = useNavigate();
@@ -51,7 +52,9 @@ function Homepage() {
                   profilePicture={john}
                   name={woof.val.user} //need to change this
                   userName={woof.val.user} //need to change this
-                  dateTime={woof.val.date}
+                  dateTime={formatDistanceToNow(new Date(woof.val.date), {
+                    addSuffix: true,
+                  })}
                   content={woof.val.woof}
                   comments={woof.val.comments ? woof.val.comments : 0}
                   rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
