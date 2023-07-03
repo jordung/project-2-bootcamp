@@ -6,9 +6,6 @@ import { UserContext } from "../App";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMismatch, setPasswordMismatch] = useState(false);
@@ -50,34 +47,6 @@ const Register = () => {
       <div className="flex flex-col items-center max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
         <h2 className="text-3xl mb-5 font-bold">Register</h2>
         <form className="flex flex-col items-center">
-          {/* <div className="w-72 mt-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900">
-              First Name
-            </label>
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
-              value={firstName}
-              required
-              name="firstname"
-              type="text"
-              placeholder="Chandler"
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </div>
-          <div className="w-72 mt-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900">
-              Last Name
-            </label>
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
-              value={lastName}
-              required
-              name="lastname"
-              type="text"
-              placeholder="Bing"
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div> */}
           <div className="w-72">
             <label className="block mb-2 text-sm font-medium text-gray-900">
               Email
@@ -92,20 +61,6 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          {/* <div className="w-72 mt-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900">
-              Username
-            </label>
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
-              value={username}
-              // required
-              name="username"
-              type="text"
-              placeholder="chandlerbing"
-              onChange={(e) => setUserName(e.target.value)}
-            />
-          </div> */}
           <div className="w-72 mt-5">
             <label className="block mb-2 text-sm font-medium text-gray-900">
               Password
@@ -125,13 +80,11 @@ const Register = () => {
             </label>
             <input
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
-              // value={password}
               name="password"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              // onChange={(e) => setPassword(e.target.value)}
             />
             {passwordMismatch && (
               <p className="text-red-400 text-sm">Passwords do not match.</p>
