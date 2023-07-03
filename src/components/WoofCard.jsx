@@ -24,7 +24,7 @@ function WoofCard(props) {
             </div>
             <p className="text-gray-900 ml-5">{props.content}</p>
             {props.image && props.image !== null && (
-              <div className="ml-5 my-2 rounded-2xl">
+              <div className="ml-5 my-2 rounded-2xl max-w-xs">
                 <img
                   className="object-contain rounded-2xl"
                   src={props.image}
