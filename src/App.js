@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import { useState, useEffect, createContext } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import ComposeWoof from "./pages/ComposeWoof";
 import NewProfile from "./pages/NewProfile";
+import ErrorPage from "./pages/ErrorPage";
 import { onChildAdded, ref } from "firebase/database";
 
 export const UserContext = createContext({});
@@ -83,6 +84,8 @@ function App() {
               path="profile"
               element={<Profile handleSignOut={handleSignOut} />}
             />
+            <Route path="*" element={<Navigate replace to="/404" />} />
+            <Route path="/404" element={<ErrorPage />} />
           </Routes>
           <Navbar handleSignOut={handleSignOut} />
         </WoofsContext.Provider>
