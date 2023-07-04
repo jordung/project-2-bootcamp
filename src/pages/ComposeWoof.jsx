@@ -15,7 +15,7 @@ import { push, ref, set } from "firebase/database";
 import { database, storage } from "../firebase";
 
 function ComposeWoof() {
-  const { user, username } = useContext(UserContext);
+  const { user, userinfo } = useContext(UserContext);
 
   const [textInput, setTextInput] = useState("");
   const [inputCounter, setInputCounter] = useState(280);
@@ -42,7 +42,7 @@ function ComposeWoof() {
       user: user.uid,
       name: user.displayName,
       profilePicture: user.photoURL,
-      username: username.username,
+      username: userinfo.username,
       woof: textInput,
       date: new Date().toLocaleString(),
       url: url,
@@ -126,7 +126,7 @@ function ComposeWoof() {
             <label htmlFor="image-input">
               <GoImage
                 type="file"
-                className="h-8 w-8 text-gray-400 hover:text-orange-400"
+                className="h-8 w-8 text-gray-400 hover:text-orange-400 trasition-all ease-in-out cursor-pointer"
               />
             </label>
             <input
