@@ -291,7 +291,7 @@ function Profile({ handleSignOut }) {
                 <ul className="divide-y divide-gray-200">
                   {woofs
                     .sort((a, b) => new Date(b.val.date) - new Date(a.val.date))
-                    .filter((woof) => woof.val.user === user.email)
+                    .filter((woof) => woof.val.user === user.uid)
                     .map((woof) => (
                       <WoofCard
                         key={woof.key}
