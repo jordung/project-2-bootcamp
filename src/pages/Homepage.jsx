@@ -2,8 +2,6 @@ import logo from "../assets/woofly-logo2.png";
 import { useNavigate } from "react-router-dom";
 import WoofCard from "../components/WoofCard";
 import john from "../assets/john.jpg";
-import mary from "../assets/mary.jpg";
-import apostles from "../assets/apostles.jpeg";
 import ComposeWoof from "./ComposeWoof";
 import { useContext } from "react";
 import { UserContext, WoofsContext } from "../App";
@@ -63,27 +61,6 @@ function Homepage() {
                   image={woof.val.url ? woof.val.url : null}
                 />
               ))}
-            <WoofCard
-              profilePicture={john}
-              name="John Doe"
-              userName="@johndoe"
-              dateTime="45m"
-              content="I love Woofly!"
-              comments="13"
-              rewoofs="20"
-              likes="6"
-            />
-            <WoofCard
-              profilePicture={mary}
-              name="Mary Anne"
-              userName="@maryland"
-              dateTime="45m"
-              content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste alias ipsum architecto vitae magni ullam velit error veniam fugit expedita?"
-              comments="1123"
-              rewoofs="24440"
-              likes="600"
-              image={apostles}
-            />
           </ul>
         </div>
       </div>

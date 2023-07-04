@@ -16,7 +16,7 @@ function WoofCard(props) {
               <p className="text-sm mx-5 font-medium text-gray-900">
                 {props.name}
               </p>
-              <p className="text-sm mr-3 text-gray-500">{props.userName}</p>
+              <p className="text-sm mr-3 text-gray-500">@{props.userName}</p>
               <p className="text-sm mr-3 text-gray-500">
                 <BsDot />
               </p>
