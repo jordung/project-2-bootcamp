@@ -39,7 +39,10 @@ function ComposeWoof() {
     const newWoofRef = push(woofRef);
 
     set(newWoofRef, {
-      user: user.email, // we'll need to change this to be the username instead
+      user: user.uid,
+      name: user.displayName,
+      profilePicture: user.photoURL,
+      username: username.username,
       woof: textInput,
       date: new Date().toLocaleString(),
       url: url,

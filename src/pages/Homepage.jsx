@@ -12,6 +12,24 @@ function Homepage() {
   const navigate = useNavigate();
   const woofs = useContext(WoofsContext);
 
+  const formatTime = (date) => {
+    const now = new Date();
+    const diffInSeconds = Math.abs(now - date) / 1000;
+    const days = Math.floor(diffInSeconds / 86400);
+    const hours = Math.floor(diffInSeconds / 3600) % 24;
+    const minutes = Math.floor(diffInSeconds / 60) % 60;
+
+    if (days > 0) {
+      return `${days}d`;
+    } else if (hours > 0) {
+      return `${hours}h`;
+    } else if (minutes > 0) {
+      return `${minutes}m`;
+    } else {
+      return "now";
+    }
+  };
+
   return (
     <div className="bg-white min-h-screen flex flex-col justify-start items-start">
       {console.log(woofs)}
@@ -40,7 +58,7 @@ function Homepage() {
       </div>
 
       {/* woof card container */}
-      <div className="w-full px-2 bg-white border border-gray-200 rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-5">
+      <div className="w-full px-2 bg-white border border-gray-200 rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-5 md:pb-0">
         <div className="flow-root">
           <ul className="divide-y divide-gray-200">
             {woofs
@@ -48,12 +66,10 @@ function Homepage() {
               .map((woof) => (
                 <WoofCard
                   key={woof.key}
-                  profilePicture={john}
-                  name={woof.val.user} //need to change this
-                  userName={woof.val.user} //need to change this
-                  dateTime={formatDistanceToNow(new Date(woof.val.date), {
-                    addSuffix: true,
-                  })}
+                  profilePicture={woof.val.profilePicture}
+                  name={woof.val.name} //need to change this
+                  userName={woof.val.username} //need to change this
+                  dateTime={formatTime(new Date(woof.val.date))}
                   content={woof.val.woof}
                   comments={woof.val.comments ? woof.val.comments : 0}
                   rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
