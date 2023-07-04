@@ -53,6 +53,11 @@ function Profile({ handleSignOut }) {
   const DB_USERINFO_KEY = "userinfo/";
   const DB_WOOFS_KEY = "woofs/";
 
+  const DEFAULT_PROFILE_PICTURE =
+    "https://firebasestorage.googleapis.com/v0/b/woofly-d08c1.appspot.com/o/avatar%2Fdefault-profile-picture.png?alt=media&token=7f139b1b-19d4-4e7a-8486-d16a79a73839";
+  const DEFAULT_PROFILE_BANNER =
+    "https://firebasestorage.googleapis.com/v0/b/woofly-d08c1.appspot.com/o/banner%2Fdefault-banner-picture.jpeg?alt=media&token=a507d2b8-c653-4dbf-8c33-70640858abf9";
+
   const handleProfilePictureChange = (e) => {
     let image = e.target.files[0];
     if (image) {
@@ -137,7 +142,11 @@ function Profile({ handleSignOut }) {
 
       // Delete the old image if it exists
       const currentBannerPicture = userinfo.profileBanner;
-      if (currentBannerPicture) {
+
+      if (
+        currentBannerPicture &&
+        currentBannerPicture !== DEFAULT_PROFILE_BANNER
+      ) {
         const oldBannerRef = storageRef(storage, currentBannerPicture);
         deleteObject(oldBannerRef)
           .then(() => {
@@ -173,7 +182,10 @@ function Profile({ handleSignOut }) {
       );
       // Delete the old image if it exists
       const currentProfilePicture = user.photoURL;
-      if (currentProfilePicture) {
+      if (
+        currentProfilePicture &&
+        currentProfilePicture !== DEFAULT_PROFILE_PICTURE
+      ) {
         const oldImageRef = storageRef(storage, currentProfilePicture);
         deleteObject(oldImageRef)
           .then(() => {
