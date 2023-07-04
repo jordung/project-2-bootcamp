@@ -13,7 +13,8 @@ function Navbar({ handleSignOut }) {
     location.pathname === "/" ||
     location.pathname === "/login" ||
     location.pathname === "/register" ||
-    location.pathname === "/newProfile"
+    location.pathname === "/newProfile" ||
+    location.pathname === "/404"
   ) {
     return null;
   }
