@@ -9,6 +9,8 @@ function Profile({ handleSignOut }) {
   const { user, userinfo } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
 
+  const [editProfileModal, setEditProfileModal] = useState(false);
+
   const formatTime = (date) => {
     const now = new Date();
     const diffInSeconds = Math.abs(now - date) / 1000;
@@ -26,8 +28,6 @@ function Profile({ handleSignOut }) {
       return "now";
     }
   };
-
-  const [editProfileModal, setEditProfileModal] = useState(false);
 
   return (
     <div className="w-full px-4 flex flex-col justify-center items-start md:border md:border-gray-200 md:rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-7 md:mt-10">

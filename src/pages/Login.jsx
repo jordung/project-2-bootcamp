@@ -17,15 +17,28 @@ const Login = () => {
 
   const handleLogin = async () => {
     console.log("logging in...");
-    const user = await signInWithEmailAndPassword(auth, email, password);
-    console.log(user);
-    setEmail("");
-    setPassword("");
-    navigate("/home");
-    // })
-    // .catch((err) => {
-    //   alert(err, " - There was an error");
-    // });
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        console.log(user);
+        setEmail("");
+        setPassword("");
+        navigate("/home");
+      })
+      .catch((err) => {
+        if (err.code === "auth/user-not-found") {
+          alert(
+            "Account not found. Kindly sign up with a new account instead."
+          );
+          setEmail("");
+          setPassword("");
+        } else if (err.code === "auth/wrong-password") {
+          alert("Invalid password. Please try again");
+          setPassword("");
+        } else {
+          console.log(err);
+          alert("There was an error in logging you in.");
+        }
+      });
   };
 
   return (

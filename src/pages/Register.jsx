@@ -38,7 +38,17 @@ const Register = () => {
           setPassword("");
           navigate("/newProfile");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err.code === "auth/email-already-in-use") {
+            alert("This email is already in use. Kindly sign in instead.");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+          } else {
+            console.log(err.code);
+            alert("There was an error in signing up, please try again.");
+          }
+        });
     }
   };
 
@@ -73,6 +83,9 @@ const Register = () => {
               required
               onChange={(e) => setPassword(e.target.value)}
             />
+            <p className="text-gray-400 text-xs">
+              Passwords must be longer than 6 characters.
+            </p>
           </div>
           <div className="w-72 mt-5">
             <label className="block mb-2 text-sm font-medium text-gray-900">
