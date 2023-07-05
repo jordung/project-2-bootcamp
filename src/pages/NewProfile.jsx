@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
 import { GoTrash } from "react-icons/go";
-import { updateProfile } from "firebase/auth";
 import {
   ref as storageRef,
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
-import { auth, storage, database } from "../firebase";
+import { storage, database } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { ref as databaseRef, set, update } from "firebase/database";
 import { UserContext } from "../App";
@@ -42,6 +41,22 @@ function NewProfile() {
               name: `${firstName} ${lastName}`,
             })
               .then(() => {
+                const storageRefInstance = storageRef(
+                  storage,
+                  STORAGE_BANNER_KEY + "default-banner-picture.jpeg"
+                );
+
+                getDownloadURL(
+                  storageRefInstance,
+                  "default-banner-picture.jpeg"
+                ).then((url) => {
+                  update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+                    profileBanner: url,
+                    username: userName,
+                  });
+                });
+              })
+              .then(() => {
                 console.log("Profile Updated!");
                 setFirstName("");
                 setLastName("");
@@ -70,12 +85,27 @@ function NewProfile() {
             name: `${firstName} ${lastName}`,
           })
             .then(() => {
-              console.log("Profile Updated!");
-              setFirstName("");
-              setLastName("");
-              setProfilePictureFile("");
-              setProfilePictureValue("");
-              navigate("/profile");
+              const storageRefInstance = storageRef(
+                storage,
+                STORAGE_BANNER_KEY + "default-banner-picture.jpeg"
+              );
+
+              getDownloadURL(storageRefInstance, "default-banner-picture.jpeg")
+                .then((url) => {
+                  update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+                    profileBanner: url,
+                    username: userName,
+                  });
+                })
+                .then(() => {
+                  console.log("Profile Updated!");
+                  setFirstName("");
+                  setLastName("");
+                  setProfilePictureFile("");
+                  setProfilePictureValue("");
+                  setUserName("");
+                  navigate("/profile");
+                });
             })
             .catch((error) => {
               console.log("Error in Updating Profile Picture:", error);
@@ -85,21 +115,6 @@ function NewProfile() {
     }
 
     console.log(user.uid);
-    setUserName("");
-
-    const storageRefInstance = storageRef(
-      storage,
-      STORAGE_BANNER_KEY + "default-banner-picture.jpeg"
-    );
-
-    getDownloadURL(storageRefInstance, "default-banner-picture.jpeg").then(
-      (url) => {
-        update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
-          profileBanner: url,
-          username: userName,
-        });
-      }
-    );
   };
 
   const handleProfilePictureChange = (e) => {
