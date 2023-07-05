@@ -6,7 +6,7 @@ import { UserContext } from "../App";
 import logo from "../assets/woofly-logo2.png";
 
 function Navbar({ handleSignOut }) {
-  const { user, username } = useContext(UserContext);
+  const { user, userinfo } = useContext(UserContext);
 
   const location = useLocation();
   if (

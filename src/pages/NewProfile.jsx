@@ -18,10 +18,11 @@ function NewProfile() {
   const [profilePictureFile, setProfilePictureFile] = useState("");
   const [profilePictureValue, setProfilePictureValue] = useState("");
 
-  const { user, username } = useContext(UserContext);
+  const { user, userinfo } = useContext(UserContext);
 
-  const STORAGE_KEY = "avatar/";
-  const DB_USERNAME_KEY = "username/";
+  const STORAGE_AVATAR_KEY = "avatar/";
+  const STORAGE_BANNER_KEY = "banner/";
+  const DB_USERINFO_KEY = "userinfo/";
 
   const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ function NewProfile() {
     if (profilePictureFile.name !== undefined) {
       const storageRefInstance = storageRef(
         storage,
-        STORAGE_KEY + profilePictureFile.name
+        STORAGE_AVATAR_KEY + profilePictureFile.name
       );
       uploadBytes(storageRefInstance, profilePictureFile).then((snapshot) => {
         getDownloadURL(storageRefInstance, profilePictureFile.name)
@@ -59,7 +60,7 @@ function NewProfile() {
     } else {
       const storageRefInstance = storageRef(
         storage,
-        STORAGE_KEY + "default-profile-picture.png"
+        STORAGE_AVATAR_KEY + "default-profile-picture.png"
       );
       getDownloadURL(storageRefInstance, "default-profile-picture.png").then(
         (url) => {
@@ -84,10 +85,24 @@ function NewProfile() {
     }
 
     console.log(user.uid);
-    set(databaseRef(database, DB_USERNAME_KEY + user.uid), {
-      username: userName,
-    });
+    // set(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+    //   username: userName,
+    // });
     setUserName("");
+
+    const storageRefInstance = storageRef(
+      storage,
+      STORAGE_BANNER_KEY + "default-banner-picture.jpeg"
+    );
+
+    getDownloadURL(storageRefInstance, "default-banner-picture.jpeg").then(
+      (url) => {
+        set(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+          profileBanner: url,
+          username: userName,
+        });
+      }
+    );
   };
 
   const handleProfilePictureChange = (e) => {
@@ -120,7 +135,7 @@ function NewProfile() {
             {profilePictureFile && (
               <button
                 type="button"
-                className="bg-gray-400 rounded-full absolute p-2 ml-24 top-56"
+                className="bg-gray-400 rounded-full absolute p-2 ml-24 top-56 md:top-64"
                 onClick={() => setProfilePictureFile(null)}
               >
                 <GoTrash className="text-white text-md" />

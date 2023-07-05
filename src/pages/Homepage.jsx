@@ -4,10 +4,9 @@ import WoofCard from "../components/WoofCard";
 import ComposeWoof from "./ComposeWoof";
 import { useContext } from "react";
 import { UserContext, WoofsContext } from "../App";
-// import { formatDistanceToNow } from "date-fns";
 
 function Homepage() {
-  const { user } = useContext(UserContext);
+  const { user, userinfo } = useContext(UserContext);
   const navigate = useNavigate();
   const woofs = useContext(WoofsContext);
 
@@ -31,7 +30,6 @@ function Homepage() {
 
   return (
     <div className="bg-white min-h-screen flex flex-col justify-start items-start">
-      {console.log(woofs)}
       {/* header logo bar */}
       <div className="flex justify-between w-screen items-center h-16 md:justify-start md:hidden">
         <img
@@ -57,7 +55,7 @@ function Homepage() {
       </div>
 
       {/* woof card container */}
-      <div className="w-full px-2 bg-white border border-gray-200 rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-5 md:pb-0">
+      <div className="w-full px-2 mb-24 bg-white border border-gray-200 rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-5 md:pb-0">
         <div className="flow-root">
           <ul className="divide-y divide-gray-200">
             {woofs
@@ -67,8 +65,8 @@ function Homepage() {
                   key={woof.key}
                   woofKey={woof.key}
                   profilePicture={woof.val.profilePicture}
-                  name={woof.val.name} //need to change this
-                  userName={woof.val.username} //need to change this
+                  name={woof.val.name}
+                  userName={woof.val.username}
                   dateTime={formatTime(new Date(woof.val.date))}
                   content={woof.val.woof}
                   comments={woof.val.comments ? woof.val.comments : 0}
