@@ -1,5 +1,11 @@
 import { BsDot } from "react-icons/bs";
-import { GoShare, GoComment, GoGitCompare, GoFlame } from "react-icons/go";
+import {
+  GoShare,
+  GoComment,
+  GoGitCompare,
+  GoFlame,
+  GoTrash,
+} from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { database, storage } from "../firebase";
 import { remove, ref as databaseRef } from "firebase/database";
@@ -34,18 +40,23 @@ function WoofCard(props) {
       <div className="flex items-start flex-col">
         <div className="flex items-start w-full">
           <img
-            className="w-12 h-12 object-cover rounded-full"
+            className="w-12 h-12 object-cover rounded-full hover:opacity-50 cursor-pointer transition-all duration-300 ease-in-out"
             src={props.profilePicture}
             alt="profile"
+            onClick={() => navigate(`/profile/${props.user}`)}
           />
           <div className="w-full flex flex-col">
             <div className="flex items-center">
-              <p className="text-sm mx-5 font-medium text-gray-900 hover:text-orange-400 cursor-pointer">
+              <p className="text-sm mx-5 font-medium text-gray-900 hover:text-orange-400 cursor-pointer transition-all duration-300 ease-in-out">
                 <span onClick={() => navigate(`/profile/${props.user}`)}>
                   {props.name}
                 </span>
               </p>
-              <p className="text-sm mr-3 text-gray-500">@{props.userName}</p>
+              <p className="text-sm mr-3 text-gray-500 hover:text-orange-400 cursor-pointer transition-all duration-300 ease-in-out">
+                <span onClick={() => navigate(`/profile/${props.user}`)}>
+                  @{props.userName}
+                </span>
+              </p>
               <p className="text-sm mr-3 text-gray-500">
                 <BsDot />
               </p>
@@ -92,7 +103,10 @@ function WoofCard(props) {
                   onClick={() => handleDeleteWoof(props.woofKey, props.image)}
                   className="text-sm text-gray-500 hover:text-red-500 focus:outline-none"
                 >
-                  Delete
+                  <GoTrash
+                    className="w-5 h-5 hover:text-orange-400 transition duration-300 
+                      ease-in-out cursor-pointer"
+                  />
                 </button>
               )}
             </div>

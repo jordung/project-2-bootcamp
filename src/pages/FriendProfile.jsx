@@ -1,20 +1,27 @@
 import { Tabs, Tab } from "../components/Tabs";
 import WoofCard from "../components/WoofCard";
-import mary from "../assets/mary.jpg";
-import { Link, useNavigate, useParams } from "react-router-dom";
+// import mary from "../assets/mary.jpg";
+import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, WoofsContext } from "../App";
-
-import { auth } from "../firebase";
-import { ref as databaseRef, update } from "firebase/database";
-import { database, storage } from "../firebase";
+import { ref as databaseRef, onValue } from "firebase/database";
+import { database } from "../firebase";
 
 function FriendProfile() {
   const { user, userinfo } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
   const navigate = useNavigate();
+  const [profileInfo, setProfileInfo] = useState({});
 
   const { id } = useParams();
+  const DB_USERINFO_KEY = `userinfo/`;
+
+  useEffect(() => {
+    const friendInfoRef = databaseRef(database, DB_USERINFO_KEY + id);
+    onValue(friendInfoRef, (snapshot) => {
+      setProfileInfo(snapshot.val());
+    });
+  }, [id]);
 
   useEffect(() => {
     if (id === user.uid) {
@@ -45,14 +52,14 @@ function FriendProfile() {
       <div className="absolute -z-10 top-0 left-0 md:relative">
         <img
           className="object-cover w-screen h-[15vh] md:rounded-2xl lg:h-[25vh]"
-          src={userinfo.profileBanner}
+          src={profileInfo.profileBanner}
           alt="profile banner"
         />
       </div>
       <div className="flex justify-between w-full items-end mt-20 md:-mt-12 md:px-12">
         <img
           className="h-24 w-24 object-cover rounded-lg border-4 border-white"
-          src={user.photoURL}
+          src={profileInfo.profilePicture}
           alt="profile"
         />
         {/* <button
@@ -76,9 +83,9 @@ function FriendProfile() {
           </button> */}
         </div>
       </div>
-      <h5 className="mt-3 text-lg font-medium md:px-12">{user.displayName}</h5>
-      <p className="text-gray-500 text-md md:px-12">@{userinfo.username}</p>
-      <p className="mt-3 text-sm md:px-12">{userinfo.bio}</p>
+      <h5 className="mt-3 text-lg font-medium md:px-12">{profileInfo.name}</h5>
+      <p className="text-gray-500 text-md md:px-12">@{profileInfo.username}</p>
+      <p className="mt-3 text-sm md:px-12">{profileInfo.bio}</p>
       <div className="flex gap-4 mt-3 md:px-12">
         <div className="flex gap-1">
           <p className="text-sm font-bold">50</p>
