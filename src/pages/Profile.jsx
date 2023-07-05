@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext, WoofsContext } from "../App";
 
-import { updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
 import { ref as databaseRef, update } from "firebase/database";
 import { database, storage } from "../firebase";
 import {
@@ -84,8 +82,8 @@ function Profile({ handleSignOut }) {
     e.preventDefault();
 
     if (firstName !== "" && lastName !== "") {
-      updateProfile(auth.currentUser, {
-        displayName: `${firstName} ${lastName}`,
+      update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+        name: `${firstName} ${lastName}`,
       }).then(() => {
         for (let key of myWoofsKeys) {
           update(databaseRef(database, DB_WOOFS_KEY + key), {
@@ -93,24 +91,23 @@ function Profile({ handleSignOut }) {
           });
         }
       });
-      // update(databaseRef(database, DB_WOOFS_KEY +))
     } else if (firstName !== "" && lastName === "") {
-      updateProfile(auth.currentUser, {
-        displayName: `${firstName} ${user.displayName.split(" ")[1]}`,
+      update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+        name: `${firstName} ${user.name.split(" ")[1]}`,
       }).then(() => {
         for (let key of myWoofsKeys) {
           update(databaseRef(database, DB_WOOFS_KEY + key), {
-            name: `${firstName} ${user.displayName.split(" ")[1]}`,
+            name: `${firstName} ${user.name.split(" ")[1]}`,
           });
         }
       });
     } else if (lastName !== "" && firstName === "") {
-      updateProfile(auth.currentUser, {
-        displayName: `${user.displayName.split(" ")[0]} ${lastName}`,
+      update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+        name: `${user.name.split(" ")[0]} ${lastName}`,
       }).then(() => {
         for (let key of myWoofsKeys) {
           update(databaseRef(database, DB_WOOFS_KEY + key), {
-            name: `${user.displayName.split(" ")[0]} ${lastName}`,
+            name: `${user.name.split(" ")[0]} ${lastName}`,
           });
         }
       });
@@ -181,7 +178,7 @@ function Profile({ handleSignOut }) {
         STORAGE_AVATAR_KEY + profilePictureFile.name
       );
       // Delete the old image if it exists
-      const currentProfilePicture = user.photoURL;
+      const currentProfilePicture = userinfo.profilePicture;
       if (
         currentProfilePicture &&
         currentProfilePicture !== DEFAULT_PROFILE_PICTURE
@@ -202,8 +199,8 @@ function Profile({ handleSignOut }) {
           getDownloadURL(storageRefInstance, profilePictureFile.name)
             .then((url) => {
               console.log("New profile picture uploaded successfully: ", url);
-              updateProfile(auth.currentUser, {
-                photoURL: url,
+              update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+                profilePicture: url,
               });
               for (let key of myWoofsKeys) {
                 update(databaseRef(database, DB_WOOFS_KEY + key), {
@@ -248,7 +245,7 @@ function Profile({ handleSignOut }) {
       <div className="flex justify-between w-full items-end mt-20 md:-mt-12 md:px-12">
         <img
           className="h-24 w-24 object-cover rounded-lg border-4 border-white"
-          src={user.photoURL}
+          src={userinfo.profilePicture}
           alt="profile"
         />
         <button
@@ -319,7 +316,7 @@ function Profile({ handleSignOut }) {
                             <div className="mb-1 flex flex-col items-center">
                               <img
                                 className="h-24 w-24 rounded-full object-cover md:h-48 md:w-48"
-                                src={user.photoURL}
+                                src={userinfo.profilePicture}
                                 alt="user upload"
                               />
                             </div>
@@ -340,7 +337,7 @@ function Profile({ handleSignOut }) {
                           </label>
                           <input
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
-                            defaultValue={user.displayName.split(" ")[0]}
+                            defaultValue={userinfo.name.split(" ")[0]}
                             required
                             name="firstname"
                             type="text"
@@ -354,7 +351,7 @@ function Profile({ handleSignOut }) {
                           </label>
                           <input
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
-                            defaultValue={user.displayName.split(" ")[1]}
+                            defaultValue={userinfo.name.split(" ")[1]}
                             required
                             name="lastname"
                             type="text"
@@ -441,7 +438,7 @@ function Profile({ handleSignOut }) {
           </Link>
         </div>
       </div>
-      <h5 className="mt-3 text-lg font-medium md:px-12">{user.displayName}</h5>
+      <h5 className="mt-3 text-lg font-medium md:px-12">{userinfo.name}</h5>
       <p className="text-gray-500 text-md md:px-12">@{userinfo.username}</p>
       <p className="mt-3 text-sm md:px-12">{userinfo.bio}</p>
       <div className="flex gap-4 mt-3 md:px-12">

@@ -1,7 +1,10 @@
 import { BsDot } from "react-icons/bs";
 import { GoShare, GoComment, GoGitCompare, GoFlame } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 function WoofCard(props) {
+  const navigate = useNavigate();
+
   return (
     <li className="py-3 px-5">
       <div className="flex items-start flex-col">
@@ -13,8 +16,10 @@ function WoofCard(props) {
           />
           <div className="w-full flex flex-col">
             <div className="flex items-center">
-              <p className="text-sm mx-5 font-medium text-gray-900">
-                {props.name}
+              <p className="text-sm mx-5 font-medium text-gray-900 hover:text-orange-400 cursor-pointer">
+                <span onClick={() => navigate(`/profile/${props.user}`)}>
+                  {props.name}
+                </span>
               </p>
               <p className="text-sm mr-3 text-gray-500">@{props.userName}</p>
               <p className="text-sm mr-3 text-gray-500">

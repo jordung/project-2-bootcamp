@@ -43,7 +43,7 @@ function Homepage() {
         >
           <img
             className="inline-block h-8 w-8 rounded-full shadow md:hidden"
-            src={user.photoURL}
+            src={userinfo.profilePicture}
             alt="profile"
           />
         </div>
@@ -63,6 +63,7 @@ function Homepage() {
               .map((woof) => (
                 <WoofCard
                   key={woof.key}
+                  user={woof.val.user}
                   profilePicture={woof.val.profilePicture}
                   name={woof.val.name}
                   userName={woof.val.username}
