@@ -24,6 +24,7 @@ import ComposeWoof from "./pages/ComposeWoof";
 import NewProfile from "./pages/NewProfile";
 import ErrorPage from "./pages/ErrorPage";
 import FriendProfile from "./pages/FriendProfile";
+import Explore from "./components/Explore";
 
 export const UserContext = createContext({});
 export const WoofsContext = createContext({});
@@ -125,6 +126,7 @@ function App() {
             <Route path="/404" element={<ErrorPage />} />
           </Routes>
           <Navbar handleSignOut={handleSignOut} />
+          <Explore />
         </WoofsContext.Provider>
       </UserContext.Provider>
     </div>
