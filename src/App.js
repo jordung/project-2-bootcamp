@@ -8,6 +8,7 @@ import {
   onChildChanged,
   onValue,
   onChildAdded,
+  onChildRemoved,
 } from "firebase/database";
 
 import Navbar from "./components/Navbar";
@@ -67,6 +68,12 @@ function App() {
         ...prevwoofs,
         { key: data.key, val: data.val() },
       ]);
+    });
+
+    onChildRemoved(woofsRef, (data) => {
+      setWoofs((prevwoofs) =>
+        prevwoofs.filter((woof) => woof.key !== data.key)
+      );
     });
 
     onChildChanged(woofsRef, handleChildChanged);

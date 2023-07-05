@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import john from "../assets/john.jpg";
 import { GoArrowLeft, GoImage, GoTrash } from "react-icons/go";
 // import { HiOutlineGif } from "react-icons/hi2";
 import { Link } from "react-router-dom";
