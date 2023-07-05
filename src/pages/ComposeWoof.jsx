@@ -86,10 +86,10 @@ function ComposeWoof() {
           <img
             src={userinfo.profilePicture}
             alt="profile"
-            className="h-16 w-16 object-cover rounded-full md:h-auto"
+            className="h-16 w-16 object-cover rounded-full"
           />
         </div>
-        <div className="md:w-full">
+        <div className="md:w-5/6 md:mr-auto">
           <textarea
             className="resize-none auto-rows-auto text-lg focus:outline-none h-fit md:w-full"
             rows={5}

@@ -72,7 +72,7 @@ function WoofCard(props) {
                 />
               </div>
             )}
-            <div className="mx-5 mt-2 w-70 text-gray-500 flex justify-between md:w-5/6 md:self-center md:mt-5">
+            <div className="mx-5 mt-2 mb-2 w-70 text-gray-500 flex justify-between md:w-5/6 md:self-center md:mt-5">
               <div className="flex gap-2">
                 <GoComment
                   className="w-5 h-5 hover:text-orange-400 transition duration-300 

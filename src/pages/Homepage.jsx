@@ -10,6 +10,13 @@ function Homepage() {
   const navigate = useNavigate();
   const woofs = useContext(WoofsContext);
 
+  let followedUsers = [user.uid];
+
+  if (userinfo.following !== undefined) {
+    followedUsers = Object.keys(userinfo.following);
+    followedUsers.push(user.uid);
+  }
+
   const formatTime = (date) => {
     const now = new Date();
     const diffInSeconds = Math.abs(now - date) / 1000;
@@ -56,9 +63,20 @@ function Homepage() {
 
       {/* woof card container */}
       <div className="w-full px-2 mb-24 bg-white border border-gray-200 rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-5 md:pb-0">
+        {followedUsers.length < 2 && (
+          <div className="flex justify-center">
+            <span
+              className="bg-blue-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 my-3 rounded-full cursor-pointer hover:bg-blue-200 transition duration-300 md:mt-0 md:mb-5"
+              onClick={() => navigate("/search")}
+            >
+              Follow someone to view their woofs!
+            </span>
+          </div>
+        )}
         <div className="flow-root">
           <ul className="divide-y divide-gray-200">
             {woofs
+              .filter((woof) => followedUsers.includes(woof.val.user))
               .sort((a, b) => new Date(b.val.date) - new Date(a.val.date))
               .map((woof) => (
                 <WoofCard

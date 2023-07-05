@@ -4,7 +4,7 @@ import WoofCard from "../components/WoofCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, WoofsContext } from "../App";
-import { ref as databaseRef, onValue } from "firebase/database";
+import { ref as databaseRef, onValue, update } from "firebase/database";
 import { database } from "../firebase";
 
 function FriendProfile() {
@@ -12,6 +12,7 @@ function FriendProfile() {
   const woofs = useContext(WoofsContext);
   const navigate = useNavigate();
   const [profileInfo, setProfileInfo] = useState({});
+  const [following, setFollowing] = useState();
 
   const { id } = useParams();
   const DB_USERINFO_KEY = `userinfo/`;
@@ -21,7 +22,15 @@ function FriendProfile() {
     onValue(friendInfoRef, (snapshot) => {
       setProfileInfo(snapshot.val());
     });
-  }, [id]);
+
+    const fetchFollowingData = databaseRef(
+      database,
+      `${DB_USERINFO_KEY}${user.uid}/following/${id}`
+    );
+    onValue(fetchFollowingData, (snapshot) => {
+      setFollowing(snapshot.val());
+    });
+  }, [id, DB_USERINFO_KEY, user]);
 
   useEffect(() => {
     if (id === user.uid) {
@@ -47,6 +56,43 @@ function FriendProfile() {
     }
   };
 
+  const handleFollow = () => {
+    if (!following) {
+      console.log("followed!");
+      // Add to "following" list of user.uid
+      update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+        [`following/${id}`]: true,
+      });
+
+      // Add to "followers" list of id
+      update(databaseRef(database, DB_USERINFO_KEY + id), {
+        [`followers/${user.uid}`]: true,
+      });
+    } else {
+      console.log("unfollowed");
+      // Remove from "following" list of user.uid
+      update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+        [`following/${id}`]: null,
+      });
+
+      // Remove from "followers" list of id
+      update(databaseRef(database, DB_USERINFO_KEY + id), {
+        [`followers/${user.uid}`]: null,
+      });
+    }
+  };
+
+  useEffect(() => {
+    // listening for changes in following, then search db for latest following status
+    const fetchFollowingData = databaseRef(
+      database,
+      `${DB_USERINFO_KEY}${user.uid}/following/${id}`
+    );
+    onValue(fetchFollowingData, (snapshot) => {
+      setFollowing(snapshot.val());
+    });
+  }, [following, id, user, DB_USERINFO_KEY]);
+
   return (
     <div className="w-full px-4 flex flex-col justify-center items-start md:border md:border-gray-200 md:rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-7 md:mt-10">
       <div className="absolute -z-10 top-0 left-0 md:relative">
@@ -62,25 +108,17 @@ function FriendProfile() {
           src={profileInfo.profilePicture}
           alt="profile"
         />
-        {/* <button
-          className="hidden md:inline-block md:px-4 md:py-2 md:text-sm md:font-medium md:text-gray-900 md:bg-white md:border md:border-gray-200 md:rounded-lg"
-          type="button"
-          //   onClick={() => setEditProfileModal(true)}
-        >
-          Edit Profile
-        </button> */}
-
-        <div
-          className="inline-flex rounded-md shadow-sm md:hidden"
-          role="group"
-        >
-          {/* <button
+        <div className="inline-flex rounded-md shadow-sm -mb-3">
+          {/* Follow Button for */}
+          <button
             type="button"
-            className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg "
-            // onClick={() => setEditProfileModal(true)}
+            className={`w-24 py-2 text-sm font-medium border-2 rounded-lg bg-white text-gray-900 transition duration-300 ease-in-out ${
+              following ? "border-orange-400" : "border-gray-200"
+            }`}
+            onClick={handleFollow}
           >
-            Edit Profile
-          </button> */}
+            {following !== null ? "Following" : "Follow"}
+          </button>
         </div>
       </div>
       <h5 className="mt-3 text-lg font-medium md:px-12">{profileInfo.name}</h5>
@@ -88,11 +126,20 @@ function FriendProfile() {
       <p className="mt-3 text-sm md:px-12">{profileInfo.bio}</p>
       <div className="flex gap-4 mt-3 md:px-12">
         <div className="flex gap-1">
-          <p className="text-sm font-bold">50</p>
+          <p className="text-sm font-bold">
+            {profileInfo.following === undefined
+              ? 0
+              : Object.keys(profileInfo.following).length}
+          </p>
           <p className="uppercase text-sm text-gray-500">Following</p>
         </div>
         <div className="flex gap-1">
-          <p className="text-sm font-bold">50</p>
+          <p className="text-sm font-bold">
+            {" "}
+            {profileInfo.followers === undefined
+              ? 0
+              : Object.keys(profileInfo.followers).length}
+          </p>
           <p className="uppercase text-sm text-gray-500">Followers</p>
         </div>
       </div>

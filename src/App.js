@@ -97,7 +97,7 @@ function App() {
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
-      console.log("Signed out :(");
+      console.log("Successfully logged out!");
       navigate("/");
     });
   };
