@@ -28,7 +28,7 @@ export const WoofsContext = createContext({});
 
 function App() {
   const [user, setUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userinfo, setUserinfo] = useState("");
   const [woofs, setWoofs] = useState([]);
 
@@ -79,6 +79,7 @@ function App() {
         onValue(userInfoRef, (snapshot) => {
           setUserinfo(snapshot.val());
         });
+        navigate("/home");
       } else {
         setUser({});
         setUserinfo("");
