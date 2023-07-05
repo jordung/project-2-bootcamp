@@ -63,6 +63,7 @@ function Homepage() {
               .map((woof) => (
                 <WoofCard
                   key={woof.key}
+                  woofKey={woof.key}
                   user={woof.val.user}
                   profilePicture={woof.val.profilePicture}
                   name={woof.val.name}
@@ -73,6 +74,7 @@ function Homepage() {
                   rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
                   likes={woof.val.likes ? woof.val.likes : 0}
                   image={woof.val.url ? woof.val.url : null}
+                  canDelete={woof.val.user === user.uid}
                 />
               ))}
           </ul>
