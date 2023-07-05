@@ -20,13 +20,16 @@ function NewProfile() {
   const { user, userinfo } = useContext(UserContext);
 
   const STORAGE_AVATAR_KEY = "avatar/";
-  const STORAGE_BANNER_KEY = "banner/";
+  const STORAGE_DEFAULT_AVATAR_KEY = "avatar/defaultAvatar/";
+  const STORAGE_DEFAULT_BANNER_KEY = "banner/defaultBanner/";
   const DB_USERINFO_KEY = "userinfo/";
 
   const navigate = useNavigate();
 
   const handleSetNewProfile = (e) => {
     e.preventDefault();
+
+    // user decides to upload own profile picture
     if (profilePictureFile.name !== undefined) {
       const storageRefInstance = storageRef(
         storage,
@@ -43,7 +46,7 @@ function NewProfile() {
               .then(() => {
                 const storageRefInstance = storageRef(
                   storage,
-                  STORAGE_BANNER_KEY + "default-banner-picture.jpeg"
+                  STORAGE_DEFAULT_BANNER_KEY + "default-banner-picture.jpeg"
                 );
 
                 getDownloadURL(
@@ -72,10 +75,12 @@ function NewProfile() {
             console.log(error);
           });
       });
+
+      // user decides NOT to upload own profile picture - set default profile picture
     } else {
       const storageRefInstance = storageRef(
         storage,
-        STORAGE_AVATAR_KEY + "default-profile-picture.png"
+        STORAGE_DEFAULT_AVATAR_KEY + "default-profile-picture.png"
       );
       getDownloadURL(storageRefInstance, "default-profile-picture.png").then(
         (url) => {
@@ -87,7 +92,7 @@ function NewProfile() {
             .then(() => {
               const storageRefInstance = storageRef(
                 storage,
-                STORAGE_BANNER_KEY + "default-banner-picture.jpeg"
+                STORAGE_DEFAULT_BANNER_KEY + "default-banner-picture.jpeg"
               );
 
               getDownloadURL(storageRefInstance, "default-banner-picture.jpeg")

@@ -18,6 +18,11 @@ function Profile({ handleSignOut }) {
   const { user, userinfo } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
 
+  const DEFAULT_PROFILE_BANNER =
+    "https://firebasestorage.googleapis.com/v0/b/woofly-d08c1.appspot.com/o/banner%2FdefaultBanner%2Fdefault-banner-picture.jpeg?alt=media&token=cce52cd7-5046-4bdb-8231-142b7e2299d0";
+  const DEFAULT_PROFILE_PICTURE =
+    "https://firebasestorage.googleapis.com/v0/b/woofly-d08c1.appspot.com/o/avatar%2FdefaultAvatar%2Fdefault-profile-picture.png?alt=media&token=ad69e47d-c69d-4b3b-8a7c-e6e396d9edf1";
+
   const formatTime = (date) => {
     const now = new Date();
     const diffInSeconds = Math.abs(now - date) / 1000;
@@ -50,11 +55,6 @@ function Profile({ handleSignOut }) {
   const STORAGE_BANNER_KEY = "banner/";
   const DB_USERINFO_KEY = "userinfo/";
   const DB_WOOFS_KEY = "woofs/";
-
-  const DEFAULT_PROFILE_PICTURE =
-    "https://firebasestorage.googleapis.com/v0/b/woofly-d08c1.appspot.com/o/avatar%2Fdefault-profile-picture.png?alt=media&token=7f139b1b-19d4-4e7a-8486-d16a79a73839";
-  const DEFAULT_PROFILE_BANNER =
-    "https://firebasestorage.googleapis.com/v0/b/woofly-d08c1.appspot.com/o/banner%2Fdefault-banner-picture.jpeg?alt=media&token=a507d2b8-c653-4dbf-8c33-70640858abf9";
 
   const handleProfilePictureChange = (e) => {
     let image = e.target.files[0];
