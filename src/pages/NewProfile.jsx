@@ -56,6 +56,7 @@ function NewProfile() {
                   update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
                     profileBanner: url,
                     username: userName,
+                    userId: user.uid,
                   });
                 });
               })
@@ -100,6 +101,7 @@ function NewProfile() {
                   update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
                     profileBanner: url,
                     username: userName,
+                    userId: user.uid,
                   });
                 })
                 .then(() => {
