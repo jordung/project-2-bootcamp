@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import { useState, useEffect, createContext } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
-import { ref as databaseRef, onValue } from "firebase/database";
+import { ref as databaseRef, onChildRemoved, onValue } from "firebase/database";
 import { database } from "./firebase";
 
 import Navbar from "./components/Navbar";
@@ -42,6 +42,12 @@ function App() {
         ...prevwoofs,
         { key: data.key, val: data.val() },
       ]);
+    });
+
+    onChildRemoved(woofsRef, (data) => {
+      setWoofs((prevwoofs) =>
+        prevwoofs.filter((woof) => woof.key !== data.key)
+      );
     });
 
     onAuthStateChanged(auth, (user) => {

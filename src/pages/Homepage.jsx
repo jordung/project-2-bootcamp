@@ -1,14 +1,13 @@
 import logo from "../assets/woofly-logo2.png";
 import { useNavigate } from "react-router-dom";
 import WoofCard from "../components/WoofCard";
-import john from "../assets/john.jpg";
 import ComposeWoof from "./ComposeWoof";
 import { useContext } from "react";
 import { UserContext, WoofsContext } from "../App";
-import { formatDistanceToNow } from "date-fns";
+// import { formatDistanceToNow } from "date-fns";
 
 function Homepage() {
-  const { user, username } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const woofs = useContext(WoofsContext);
 
@@ -66,6 +65,7 @@ function Homepage() {
               .map((woof) => (
                 <WoofCard
                   key={woof.key}
+                  woofKey={woof.key}
                   profilePicture={woof.val.profilePicture}
                   name={woof.val.name} //need to change this
                   userName={woof.val.username} //need to change this
@@ -75,6 +75,7 @@ function Homepage() {
                   rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
                   likes={woof.val.likes ? woof.val.likes : 0}
                   image={woof.val.url ? woof.val.url : null}
+                  canDelete={woof.val.user === user.uid}
                 />
               ))}
           </ul>
