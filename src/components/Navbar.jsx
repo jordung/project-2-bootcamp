@@ -29,14 +29,13 @@ function Navbar({ handleSignOut }) {
         />
       </div>
       <div className="flex gap-8 justify-center w-full md:flex-col md:w-2/3 md:my-12">
-        {/* <Link to="login">Login/Signup</Link> */}
         <Link
           to="profile"
           className="hidden group md:visible md:flex md:items-center md:gap-2"
         >
           <img
             className="hidden md:inline-block md:h-8 md:w-8 md:rounded-full md:shadow md:group-hover:ring-2 md:group-hover:ring-orange-400 md:transition md:duration-300"
-            src={user.photoURL}
+            src={userinfo.profilePicture}
             alt="profile"
           />
           <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">

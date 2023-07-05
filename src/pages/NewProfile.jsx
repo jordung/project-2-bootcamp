@@ -8,7 +8,7 @@ import {
 } from "firebase/storage";
 import { auth, storage, database } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { ref as databaseRef, set } from "firebase/database";
+import { ref as databaseRef, set, update } from "firebase/database";
 import { UserContext } from "../App";
 
 function NewProfile() {
@@ -37,9 +37,9 @@ function NewProfile() {
         getDownloadURL(storageRefInstance, profilePictureFile.name)
           .then((url) => {
             console.log("Profile Picture uploaded successfully: ", url);
-            updateProfile(auth.currentUser, {
-              displayName: `${firstName} ${lastName}`,
-              photoURL: url,
+            set(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+              profilePicture: url,
+              name: `${firstName} ${lastName}`,
             })
               .then(() => {
                 console.log("Profile Updated!");
@@ -65,9 +65,9 @@ function NewProfile() {
       getDownloadURL(storageRefInstance, "default-profile-picture.png").then(
         (url) => {
           console.log("Default profile picture uploaded successfully: ", url);
-          updateProfile(auth.currentUser, {
-            displayName: `${firstName} ${lastName}`,
-            photoURL: url,
+          set(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+            profilePicture: url,
+            name: `${firstName} ${lastName}`,
           })
             .then(() => {
               console.log("Profile Updated!");
@@ -85,9 +85,6 @@ function NewProfile() {
     }
 
     console.log(user.uid);
-    // set(databaseRef(database, DB_USERINFO_KEY + user.uid), {
-    //   username: userName,
-    // });
     setUserName("");
 
     const storageRefInstance = storageRef(
@@ -97,7 +94,7 @@ function NewProfile() {
 
     getDownloadURL(storageRefInstance, "default-banner-picture.jpeg").then(
       (url) => {
-        set(databaseRef(database, DB_USERINFO_KEY + user.uid), {
+        update(databaseRef(database, DB_USERINFO_KEY + user.uid), {
           profileBanner: url,
           username: userName,
         });

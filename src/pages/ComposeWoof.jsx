@@ -39,8 +39,8 @@ function ComposeWoof() {
 
     set(newWoofRef, {
       user: user.uid,
-      name: user.displayName,
-      profilePicture: user.photoURL,
+      name: userinfo.name,
+      profilePicture: userinfo.profilePicture,
       username: userinfo.username,
       woof: textInput,
       date: new Date().toLocaleString(),
@@ -84,7 +84,7 @@ function ComposeWoof() {
       <div className="flex items-start gap-5">
         <div>
           <img
-            src={user.photoURL}
+            src={userinfo.profilePicture}
             alt="profile"
             className="h-16 w-16 object-cover rounded-full md:h-auto"
           />

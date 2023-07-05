@@ -23,6 +23,7 @@ import Register from "./pages/Register";
 import ComposeWoof from "./pages/ComposeWoof";
 import NewProfile from "./pages/NewProfile";
 import ErrorPage from "./pages/ErrorPage";
+import FriendProfile from "./pages/FriendProfile";
 
 export const UserContext = createContext({});
 export const WoofsContext = createContext({});
@@ -119,6 +120,7 @@ function App() {
               path="profile"
               element={<Profile handleSignOut={handleSignOut} />}
             />
+            <Route path="/profile/:id" element={<FriendProfile />} />
             <Route path="*" element={<Navigate replace to="/404" />} />
             <Route path="/404" element={<ErrorPage />} />
           </Routes>
