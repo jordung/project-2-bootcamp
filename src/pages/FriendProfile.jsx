@@ -173,16 +173,29 @@ function FriendProfile() {
           <div className="pt-1 pb-24 md:pb-0 max-sm:min-w-[90vw]">
             <div className="flow-root">
               <ul className="divide-y divide-gray-200">
-                {/* <WoofCard
-                  profilePicture={mary}
-                  name="Mary Anne"
-                  userName="maryland"
-                  dateTime="45m"
-                  content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste alias ipsum architecto vitae magni ullam velit error veniam fugit expedita?"
-                  comments="1123"
-                  rewoofs="24440"
-                  likes="600"
-                /> */}
+                {woofs
+                  .sort((a, b) => new Date(b.val.date) - new Date(a.val.date))
+                  .filter(
+                    (woof) =>
+                      woof.val.likes && Object.keys(woof.val.likes).includes(id)
+                  )
+                  .map((woof) => (
+                    <WoofCard
+                      key={woof.key}
+                      woofKey={woof.key}
+                      user={woof.val.user}
+                      profilePicture={woof.val.profilePicture}
+                      name={woof.val.name}
+                      userName={woof.val.username}
+                      dateTime={formatTime(new Date(woof.val.date))}
+                      content={woof.val.woof}
+                      comments={woof.val.comments ? woof.val.comments : 0}
+                      rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
+                      likes={woof.val.likes}
+                      image={woof.val.url ? woof.val.url : null}
+                      canDelete={woof.val.user === id}
+                    />
+                  ))}
               </ul>
             </div>
           </div>

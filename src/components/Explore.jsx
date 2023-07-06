@@ -13,10 +13,9 @@ function Explore() {
     axios
       .get(url)
       .then((response) => {
-        // console.log(response);
         const articles = response.data.articles;
         const newsData = articles.map((article) => ({
-          title: article.title.split(" ").slice(0, 12).join(" "), // Save only the first 40 words
+          title: article.title.split(" ").slice(0, 12).join(" "), // Save only the first 12 words
           image: article.urlToImage,
           urlToArticle: article.url,
           description: article.description,

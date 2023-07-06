@@ -36,6 +36,8 @@ function Homepage() {
     }
   };
 
+  console.log(woofs);
+
   return (
     <div className="bg-white min-h-screen flex flex-col justify-start items-start">
       {/* header logo bar */}
@@ -91,7 +93,7 @@ function Homepage() {
                   content={woof.val.woof}
                   comments={woof.val.comments ? woof.val.comments : 0}
                   rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
-                  likes={woof.val.likes ? woof.val.likes : 0}
+                  likes={woof.val.likes}
                   image={woof.val.url ? woof.val.url : null}
                   canDelete={woof.val.user === user.uid}
                 />
