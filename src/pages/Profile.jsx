@@ -1,15 +1,20 @@
 import { Tabs, Tab } from "../components/Tabs";
 import WoofCard from "../components/WoofCard";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext, WoofsContext } from "../App";
 import EditProfileModal from "../components/EditProfileModal";
+import FollowModal from "../components/FollowModal";
+import { ref as databaseRef, onValue } from "firebase/database";
+import { database } from "../firebase";
 
 function Profile({ handleSignOut }) {
   const { user, userinfo } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
 
   const [editProfileModal, setEditProfileModal] = useState(false);
+  const [followModal, setFollowModal] = useState(false);
+  const [userData, setUserData] = useState();
   const formatTime = (date) => {
     const now = new Date();
     const diffInSeconds = Math.abs(now - date) / 1000;
@@ -27,6 +32,15 @@ function Profile({ handleSignOut }) {
       return "now";
     }
   };
+
+  const DB_USERINFO_KEY = "userinfo/";
+
+  useEffect(() => {
+    const userDataRef = databaseRef(database, DB_USERINFO_KEY);
+    onValue(userDataRef, (snapshot) => {
+      setUserData(snapshot.val());
+    });
+  }, []);
 
   return (
     <div className="w-full px-4 flex flex-col justify-center items-start md:border md:border-gray-200 md:rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-7 md:mt-10">
@@ -86,7 +100,10 @@ function Profile({ handleSignOut }) {
       <p className="mt-3 text-sm md:px-12">{userinfo.bio}</p>
       <div className="flex gap-4 mt-3 md:px-12">
         <div className="flex gap-1">
-          <p className="text-sm font-bold">
+          <p
+            className="text-sm font-bold cursor-pointer hover:text-orange-400 transition duration-300"
+            onClick={() => setFollowModal(true)}
+          >
             {userinfo.following === undefined
               ? 0
               : Object.keys(userinfo.following).length}
@@ -94,8 +111,10 @@ function Profile({ handleSignOut }) {
           <p className="uppercase text-sm text-gray-500">Following</p>
         </div>
         <div className="flex gap-1">
-          <p className="text-sm font-bold">
-            {" "}
+          <p
+            className="text-sm font-bold cursor-pointer hover:text-orange-400 transition duration-300"
+            onClick={() => setFollowModal(true)}
+          >
             {userinfo.followers === undefined
               ? 0
               : Object.keys(userinfo.followers).length}
@@ -103,6 +122,13 @@ function Profile({ handleSignOut }) {
           <p className="uppercase text-sm text-gray-500">Followers</p>
         </div>
       </div>
+      {followModal && (
+        <FollowModal
+          setFollowModal={setFollowModal}
+          userinfo={userinfo}
+          userData={userData}
+        />
+      )}
       <Tabs>
         <Tab label="Woofs">
           <div className="pt-1 pb-24 md:pb-0 max-sm:min-w-[90vw]">

@@ -58,7 +58,7 @@ function Navbar({ handleSignOut }) {
         <Link to="composeWoof" className="md:hidden">
           <FaPaw className="h-12 w-12 text-orange-400 md:hidden" />
         </Link>
-        <Link to="explore" className="flex items-center gap-2 group lg:hidden">
+        <Link to="explore" className="flex items-center gap-2 group">
           <PiCompass className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
           <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
             Explore

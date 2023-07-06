@@ -6,13 +6,24 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext, WoofsContext } from "../App";
 import { ref as databaseRef, onValue, update } from "firebase/database";
 import { database } from "../firebase";
+import FollowModal from "../components/FollowModal";
 
 function FriendProfile() {
   const { user, userinfo } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
   const navigate = useNavigate();
+
   const [profileInfo, setProfileInfo] = useState({});
   const [following, setFollowing] = useState();
+  const [followModal, setFollowModal] = useState(false);
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    const userDataRef = databaseRef(database, DB_USERINFO_KEY);
+    onValue(userDataRef, (snapshot) => {
+      setUserData(snapshot.val());
+    });
+  }, []);
 
   const { id } = useParams();
   const DB_USERINFO_KEY = `userinfo/`;
@@ -126,7 +137,10 @@ function FriendProfile() {
       <p className="mt-3 text-sm md:px-12">{profileInfo.bio}</p>
       <div className="flex gap-4 mt-3 md:px-12">
         <div className="flex gap-1">
-          <p className="text-sm font-bold">
+          <p
+            className="text-sm font-bold cursor-pointer hover:text-orange-400 transition duration-300"
+            onClick={() => setFollowModal(true)}
+          >
             {profileInfo.following === undefined
               ? 0
               : Object.keys(profileInfo.following).length}
@@ -134,8 +148,10 @@ function FriendProfile() {
           <p className="uppercase text-sm text-gray-500">Following</p>
         </div>
         <div className="flex gap-1">
-          <p className="text-sm font-bold">
-            {" "}
+          <p
+            className="text-sm font-bold cursor-pointer hover:text-orange-400 transition duration-300"
+            onClick={() => setFollowModal(true)}
+          >
             {profileInfo.followers === undefined
               ? 0
               : Object.keys(profileInfo.followers).length}
@@ -143,6 +159,13 @@ function FriendProfile() {
           <p className="uppercase text-sm text-gray-500">Followers</p>
         </div>
       </div>
+      {followModal && (
+        <FollowModal
+          setFollowModal={setFollowModal}
+          userinfo={profileInfo}
+          userData={userData}
+        />
+      )}
       <Tabs>
         <Tab label="Woofs">
           <div className="pt-1 pb-24 md:pb-0 max-sm:min-w-[90vw]">
