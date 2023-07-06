@@ -8,14 +8,22 @@ import {
 } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { database, storage } from "../firebase";
-import { remove, ref as databaseRef } from "firebase/database";
+import { remove, ref as databaseRef, update } from "firebase/database";
 import { deleteObject, ref as storageRef } from "firebase/storage";
+import { useContext, useState } from "react";
+import { UserContext } from "../App";
 
 function WoofCard(props) {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+  const [liked, setLiked] = useState(
+    props.likes && props.likes[user.uid] ? true : false
+  );
+
+  const DB_WOOFS_KEY = "/woofs";
+
   const handleDeleteWoof = (woofKey, image) => {
     const woofRef = databaseRef(database, `woofs/${woofKey}`);
-    console.log("this is the image", image);
     remove(woofRef)
       .then(() => {
         if (image) {
@@ -33,6 +41,35 @@ function WoofCard(props) {
       .catch((error) => {
         console.log("Error deleting woof:", error);
       });
+  };
+
+  const handleLike = () => {
+    if (!liked) {
+      console.log("liked!");
+      update(databaseRef(database, DB_WOOFS_KEY + `/${props.woofKey}`), {
+        [`likes/${user.uid}`]: true,
+      })
+        .then(() => {
+          setLiked(true);
+        })
+        .catch((error) => {
+          console.log("Error while liking: ", error);
+        });
+    } else {
+      console.log("unliked");
+      remove(
+        databaseRef(
+          database,
+          DB_WOOFS_KEY + `/${props.woofKey}/likes/${user.uid}`
+        )
+      )
+        .then(() => {
+          setLiked(false);
+        })
+        .catch((error) => {
+          console.log("Error while unliking: ", error);
+        });
+    }
   };
 
   return (
@@ -87,12 +124,23 @@ function WoofCard(props) {
                 />
                 <p className="text-sm">{props.rewoofs}</p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2" onClick={() => handleLike()}>
                 <GoFlame
-                  className="w-5 h-5 hover:text-orange-400 transition duration-300
-                      ease-in-out cursor-pointer"
+                  style={
+                    props.likes && props.likes[user.uid]
+                      ? { color: "#fb923c" }
+                      : {}
+                  }
+                  className="w-5 h-5 transition duration-300 ease-in-out cursor-pointer"
                 />
-                <p className="text-sm">
+                <p
+                  style={
+                    props.likes && props.likes[user.uid]
+                      ? { color: "#fb923c" }
+                      : {}
+                  }
+                  className="text-sm"
+                >
                   {props.likes ? Object.keys(props.likes).length : 0}
                 </p>
               </div>
