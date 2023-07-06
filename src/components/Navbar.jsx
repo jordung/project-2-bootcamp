@@ -1,4 +1,5 @@
 import { GoHome, GoSearch, GoBell, GoMail, GoSignOut } from "react-icons/go";
+import { PiCompass } from "react-icons/pi";
 import { FaPaw } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
@@ -28,7 +29,7 @@ function Navbar({ handleSignOut }) {
           alt="Woofly Logo"
         />
       </div>
-      <div className="flex gap-8 justify-center w-full md:flex-col md:w-2/3 md:my-12">
+      <div className="flex gap-8 justify-center w-full md:flex-col md:w-2/3 md:my-12 md:items-start">
         <Link
           to="profile"
           className="hidden group md:visible md:flex md:items-center md:gap-2"
@@ -57,12 +58,18 @@ function Navbar({ handleSignOut }) {
         <Link to="composeWoof" className="md:hidden">
           <FaPaw className="h-12 w-12 text-orange-400 md:hidden" />
         </Link>
-        <Link to="notifications" className="flex items-center gap-2 group">
+        <Link to="explore" className="flex items-center gap-2 group lg:hidden">
+          <PiCompass className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
+          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+            Explore
+          </p>
+        </Link>
+        {/* <Link to="notifications" className="flex items-center gap-2 group">
           <GoBell className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
           <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
             Notifications
           </p>
-        </Link>
+        </Link> */}
         <Link to="messages" className="flex items-center gap-2 group">
           <GoMail className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
           <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
@@ -72,7 +79,7 @@ function Navbar({ handleSignOut }) {
 
         <Link
           to="/"
-          className="hidden md:flex items-center gap-2 group"
+          className="hidden lg:flex items-center gap-2 group"
           onClick={() => handleSignOut()}
         >
           <GoSignOut className="hidden md:inline-block md:h-8 md:w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />

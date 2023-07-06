@@ -117,7 +117,7 @@ function Search() {
             <input
               type="search"
               className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none"
-              placeholder="Find other users!"
+              placeholder="Find woofs and users here!"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               required

@@ -117,6 +117,7 @@ function App() {
             <Route path="notifications" element={<Notifications />} />
             <Route path="composeWoof" element={<ComposeWoof />} />
             <Route path="newProfile" element={<NewProfile />} />
+            <Route path="explore" element={<Explore />} />
             <Route
               path="profile"
               element={<Profile handleSignOut={handleSignOut} />}
@@ -126,7 +127,6 @@ function App() {
             <Route path="/404" element={<ErrorPage />} />
           </Routes>
           <Navbar handleSignOut={handleSignOut} />
-          <Explore />
         </WoofsContext.Provider>
       </UserContext.Provider>
     </div>

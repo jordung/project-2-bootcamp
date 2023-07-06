@@ -225,14 +225,14 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                   <label htmlFor="banner-input">
                     {bannerPictureFile !== "" ? (
                       <img
-                        className="rounded-md object-cover w-screen h-[15vh]"
+                        className="rounded-md object-cover w-screen h-[15vh] cursor-pointer"
                         src={URL.createObjectURL(bannerPictureFile)}
                         alt="user upload"
                       />
                     ) : (
                       <div className="mb-1 flex flex-col">
                         <img
-                          className="rounded-md object-cover w-screen h-[15vh]"
+                          className="rounded-md object-cover w-screen h-[15vh] cursor-pointer"
                           src={userinfo.profileBanner}
                           alt="user upload"
                         />
@@ -256,7 +256,7 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                     {profilePictureFile !== "" ? (
                       <div className="mb-1 flex flex-col items-center">
                         <img
-                          className="h-24 w-24 rounded-full object-cover md:h-48 md:w-48"
+                          className="h-24 w-24 rounded-full object-cover md:h-48 md:w-48 cursor-pointer"
                           src={URL.createObjectURL(profilePictureFile)}
                           alt="user upload"
                         />
@@ -264,7 +264,7 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                     ) : (
                       <div className="mb-1 flex flex-col items-center">
                         <img
-                          className="h-24 w-24 rounded-full object-cover md:h-48 md:w-48"
+                          className="h-24 w-24 rounded-full object-cover md:h-48 md:w-48 cursor-pointer"
                           src={userinfo.profilePicture}
                           alt="user upload"
                         />

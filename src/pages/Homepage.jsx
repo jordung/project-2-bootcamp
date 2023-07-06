@@ -1,6 +1,7 @@
 import logo from "../assets/woofly-logo2.png";
 import { useNavigate } from "react-router-dom";
 import WoofCard from "../components/WoofCard";
+import Explore from "../components/Explore";
 import ComposeWoof from "./ComposeWoof";
 import { useContext } from "react";
 import { UserContext, WoofsContext } from "../App";
@@ -97,6 +98,9 @@ function Homepage() {
               ))}
           </ul>
         </div>
+      </div>
+      <div>
+        <Explore />
       </div>
     </div>
   );
