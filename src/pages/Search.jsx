@@ -21,8 +21,8 @@ function Search() {
   const DB_USERINFO_KEY = "userinfo/";
 
   useEffect(() => {
-    const friendInfoRef = databaseRef(database, DB_USERINFO_KEY);
-    onValue(friendInfoRef, (snapshot) => {
+    const userDataRef = databaseRef(database, DB_USERINFO_KEY);
+    onValue(userDataRef, (snapshot) => {
       setUserData(snapshot.val());
     });
   }, []);

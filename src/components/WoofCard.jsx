@@ -89,10 +89,12 @@ function WoofCard(props) {
               </div>
               <div className="flex gap-2">
                 <GoFlame
-                  className="w-5 h-5 hover:text-orange-400 transition duration-300 
+                  className="w-5 h-5 hover:text-orange-400 transition duration-300
                       ease-in-out cursor-pointer"
                 />
-                <p className="text-sm">{props.likes}</p>
+                <p className="text-sm">
+                  {props.likes ? Object.keys(props.likes).length : 0}
+                </p>
               </div>
               <GoShare
                 className="w-5 h-5 hover:text-orange-400 transition duration-300 
