@@ -10,7 +10,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const navigate = useNavigate();
-  const { user, userinfo } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (user.email) {

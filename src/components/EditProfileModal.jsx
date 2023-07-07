@@ -13,9 +13,7 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [profilePictureFile, setProfilePictureFile] = useState("");
-  const [profilePictureValue, setProfilePictureValue] = useState("");
   const [bannerPictureFile, setBannerPictureFile] = useState("");
-  const [bannerPictureValue, setBannerPictureValue] = useState("");
   const [userBio, setUserBio] = useState("");
 
   const DEFAULT_PROFILE_BANNER =
@@ -38,7 +36,6 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
     let image = e.target.files[0];
     if (image) {
       setProfilePictureFile(image);
-      setProfilePictureValue(e.target.files);
     }
   };
 
@@ -46,7 +43,6 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
     let bannerImage = e.target.files[0];
     if (bannerImage) {
       setBannerPictureFile(bannerImage);
-      setBannerPictureValue(e.target.files);
     }
   };
 
@@ -199,7 +195,7 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
     setFirstName("");
     setLastName("");
     setProfilePictureFile("");
-    setProfilePictureValue("");
+    setBannerPictureFile("");
     setUserName("");
     setUserBio("");
     setEditProfileModal(false);

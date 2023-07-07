@@ -140,22 +140,19 @@ function Explore() {
               .filter((article) => article.image)
               .slice(0, 3)
               .map((article) => (
-                <div
-                  className="py-4 hover:text-orange-400 transition duration-300 saturate-0 hover:saturate-100"
-                  key={article.urlToArticle}
-                >
+                <div className="py-4 group" key={article.urlToArticle}>
                   <a
                     href={article.urlToArticle}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <h6 className="text-xs font-bold py-3 text-gray-500 text-center">
+                    <h6 className="text-xs font-bold py-3 text-gray-500 text-center group-hover:text-orange-400 transition duration-300">
                       {article.title}
                     </h6>
                   </a>
                   <div className="flex justify-center">
                     <img
-                      className="w-26 max-h-40 rounded-lg object-cover cursor-pointer"
+                      className="w-26 max-h-40 rounded-lg object-cover cursor-pointer saturate-0 group-hover:saturate-100 transition duration-300"
                       src={article.image}
                       alt={article.title}
                     />

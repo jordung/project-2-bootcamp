@@ -9,7 +9,7 @@ import { database } from "../firebase";
 import FollowModal from "../components/FollowModal";
 
 function FriendProfile() {
-  const { user, userinfo } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
   const navigate = useNavigate();
 

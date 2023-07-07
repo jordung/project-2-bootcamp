@@ -15,9 +15,8 @@ function NewProfile() {
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [profilePictureFile, setProfilePictureFile] = useState("");
-  const [profilePictureValue, setProfilePictureValue] = useState("");
 
-  const { user, userinfo } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const STORAGE_AVATAR_KEY = "avatar/";
   const STORAGE_DEFAULT_AVATAR_KEY = "avatar/defaultAvatar/";
@@ -65,7 +64,6 @@ function NewProfile() {
                 setFirstName("");
                 setLastName("");
                 setProfilePictureFile("");
-                setProfilePictureValue("");
                 navigate("/profile");
               })
               .catch((error) => {
@@ -109,7 +107,6 @@ function NewProfile() {
                   setFirstName("");
                   setLastName("");
                   setProfilePictureFile("");
-                  setProfilePictureValue("");
                   setUserName("");
                   navigate("/profile");
                 });
@@ -128,7 +125,6 @@ function NewProfile() {
     let image = e.target.files[0];
     if (image) {
       setProfilePictureFile(image);
-      setProfilePictureValue(e.target.files);
     }
   };
 

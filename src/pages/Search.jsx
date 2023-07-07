@@ -6,10 +6,11 @@ import { database } from "../firebase";
 import SearchedUserCard from "../components/SearchedUserCard";
 import { TbFaceIdError } from "react-icons/tb";
 import { BiSolidDog } from "react-icons/bi";
+import { AiOutlineClear } from "react-icons/ai";
 import WoofCard from "../components/WoofCard";
 
 function Search() {
-  const { user, userinfo } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -83,6 +84,13 @@ function Search() {
     setSearchQuery("");
   };
 
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    setSearchedQuery("");
+    setSearchedUsers([]);
+    setSearchedWoofs([]);
+  };
+
   return (
     <div className="bg-white min-h-screen">
       <div className="w-full px-2 mt-3 bg-white rounded-xl flex flex-col md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-10 md:pb-10 md:mb-0 md:border md:border-gray-200">
@@ -132,13 +140,21 @@ function Search() {
           </div>
         </form>
         {searchedQuery && (
-          <div className="flex items-center mt-2 gap-2 md:mt-5">
-            <p className="uppercase text-gray-500 text-xs pl-2 md:text-sm">
-              Searched:
-            </p>
-            <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full md:text-sm">
-              {searchedQuery}
-            </span>
+          <div className="flex items-center justify-between mt-2 md:mt-3">
+            <div className="flex items-center gap-2">
+              <p className="uppercase text-gray-500 text-xs pl-2 md:text-sm">
+                Searched:
+              </p>
+              <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full md:text-sm">
+                {searchedQuery}
+              </span>
+            </div>
+            <button
+              className="uppercase text-white text-xs bg-gray-800 py-2 px-2 rounded-lg hover:bg-gray-600 transition duration-300"
+              onClick={handleClearSearch}
+            >
+              <AiOutlineClear className="h-5 w-5 text-white" />
+            </button>
           </div>
         )}
       </div>
