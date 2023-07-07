@@ -7,7 +7,7 @@ import { UserContext } from "../App";
 import logo from "../assets/woofly-logo2.png";
 
 function Navbar({ handleSignOut }) {
-  const { user, userinfo } = useContext(UserContext);
+  const { userinfo } = useContext(UserContext);
 
   const location = useLocation();
   if (
@@ -35,23 +35,45 @@ function Navbar({ handleSignOut }) {
           className="hidden group md:visible md:flex md:items-center md:gap-2"
         >
           <img
-            className="hidden md:inline-block md:h-8 md:w-8 md:rounded-full md:shadow md:group-hover:ring-2 md:group-hover:ring-orange-400 md:transition md:duration-300"
+            className={`hidden md:inline-block md:h-8 md:w-8 md:rounded-full md:shadow md:group-hover:ring-2 md:group-hover:ring-orange-400 md:transition md:duration-300 ${
+              location.pathname === "/profile" && "ring-orange-400 ring-2"
+            }`}
             src={userinfo.profilePicture}
             alt="profile"
           />
-          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <p
+            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/profile" && "text-orange-400"
+            }`}
+          >
             Profile
           </p>
         </Link>
         <Link to="home" className="flex items-center gap-2 group">
-          <GoHome className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <GoHome
+            className={`h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/home" && "text-orange-400"
+            }`}
+          />
+          <p
+            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/home" && "text-orange-400"
+            }`}
+          >
             Home
           </p>
         </Link>
         <Link to="search" className="flex items-center gap-2 group">
-          <GoSearch className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <GoSearch
+            className={`h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/search" && "text-orange-400"
+            }`}
+          />
+          <p
+            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/search" && "text-orange-400"
+            }`}
+          >
             Search
           </p>
         </Link>
@@ -59,8 +81,16 @@ function Navbar({ handleSignOut }) {
           <FaPaw className="h-12 w-12 text-orange-400 md:hidden" />
         </Link>
         <Link to="explore" className="flex items-center gap-2 group">
-          <PiCompass className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <PiCompass
+            className={`h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/explore" && "text-orange-400"
+            }`}
+          />
+          <p
+            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/explore" && "text-orange-400"
+            }`}
+          >
             Explore
           </p>
         </Link>
@@ -71,8 +101,16 @@ function Navbar({ handleSignOut }) {
           </p>
         </Link> */}
         <Link to="messages" className="flex items-center gap-2 group">
-          <GoMail className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <GoMail
+            className={`h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/messages" && "text-orange-400"
+            }`}
+          />
+          <p
+            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/messages" && "text-orange-400"
+            }`}
+          >
             Messages
           </p>
         </Link>

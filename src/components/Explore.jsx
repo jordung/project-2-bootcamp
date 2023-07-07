@@ -89,7 +89,7 @@ function Explore() {
   }
 
   return (
-    <div className="bg-white min-h-screen pb-24 px-2">
+    <div className="bg-white min-h-screen pb-24">
       <div className="w-full px-2 mt-3 bg-white rounded-xl flex flex-col md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-10 md:pb-5 md:mb-0 md:border md:border-gray-200">
         <p className="px-2 pt-5 pb-1 text-xl font-medium text-gray-900 text-center md:pt-0 md:pb-1">
           Explore

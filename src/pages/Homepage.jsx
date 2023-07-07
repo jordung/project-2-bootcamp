@@ -35,8 +35,6 @@ function Homepage() {
     }
   };
 
-  console.log(woofs);
-
   return (
     <div className="bg-white min-h-screen flex flex-col justify-start items-start">
       {/* header logo bar */}
