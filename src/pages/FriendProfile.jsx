@@ -18,15 +18,15 @@ function FriendProfile() {
   const [followModal, setFollowModal] = useState(false);
   const [userData, setUserData] = useState();
 
+  const { id } = useParams();
+  const DB_USERINFO_KEY = `userinfo/`;
+
   useEffect(() => {
     const userDataRef = databaseRef(database, DB_USERINFO_KEY);
     onValue(userDataRef, (snapshot) => {
       setUserData(snapshot.val());
     });
-  }, []);
-
-  const { id } = useParams();
-  const DB_USERINFO_KEY = `userinfo/`;
+  }, [DB_USERINFO_KEY]);
 
   useEffect(() => {
     const friendInfoRef = databaseRef(database, DB_USERINFO_KEY + id);
