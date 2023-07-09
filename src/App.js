@@ -28,12 +28,14 @@ import Explore from "./components/Explore";
 
 export const UserContext = createContext({});
 export const WoofsContext = createContext({});
+export const UserDataContext = createContext({});
 
 function App() {
   const [user, setUser] = useState({});
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userinfo, setUserinfo] = useState("");
   const [woofs, setWoofs] = useState([]);
+  const [userData, setUserData] = useState();
 
   const navigate = useNavigate();
 
@@ -94,6 +96,11 @@ function App() {
         setUserinfo("");
       }
     });
+
+    const userDataRef = databaseRef(database, DB_USERINFO_KEY);
+    onValue(userDataRef, (snapshot) => {
+      setUserData(snapshot.val());
+    });
   }, []);
 
   const handleSignOut = () => {
@@ -107,26 +114,28 @@ function App() {
     <div>
       <UserContext.Provider value={{ user, userinfo }}>
         <WoofsContext.Provider value={woofs}>
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="home" element={<Homepage />} />
-            <Route path="messages" element={<Messages />} />
-            <Route path="search" element={<Search />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="composeWoof" element={<ComposeWoof />} />
-            <Route path="newProfile" element={<NewProfile />} />
-            <Route path="explore" element={<Explore />} />
-            <Route
-              path="profile"
-              element={<Profile handleSignOut={handleSignOut} />}
-            />
-            <Route path="/profile/:id" element={<FriendProfile />} />
-            <Route path="*" element={<Navigate replace to="/404" />} />
-            <Route path="/404" element={<ErrorPage />} />
-          </Routes>
-          <Navbar handleSignOut={handleSignOut} />
+          <UserDataContext.Provider value={userData}>
+            <Routes>
+              <Route path="/" element={<Welcome />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="home" element={<Homepage />} />
+              <Route path="messages" element={<Messages />} />
+              <Route path="search" element={<Search />} />
+              <Route path="notifications" element={<Notifications />} />
+              <Route path="composeWoof" element={<ComposeWoof />} />
+              <Route path="newProfile" element={<NewProfile />} />
+              <Route path="explore" element={<Explore />} />
+              <Route
+                path="profile"
+                element={<Profile handleSignOut={handleSignOut} />}
+              />
+              <Route path="/profile/:id" element={<FriendProfile />} />
+              <Route path="*" element={<Navigate replace to="/404" />} />
+              <Route path="/404" element={<ErrorPage />} />
+            </Routes>
+            <Navbar handleSignOut={handleSignOut} />
+          </UserDataContext.Provider>
         </WoofsContext.Provider>
       </UserContext.Provider>
     </div>

@@ -40,14 +40,16 @@ function FollowModal({ setFollowModal, userinfo, userData }) {
           {/* content */}
           <div className="rounded-lg bg-white">
             {/* header */}
-            <div className="flex items-center justify-center px-5 pt-5 pb-0 border-t border-solid border-slate-200 rounded-t">
-              <h3 className="text-2xl font-semibold">@{userinfo.username}</h3>
+            <div className="flex items-center justify-center px-5 pt-5 pb-0 border-solid border-slate-200 rounded-t">
+              <h3 className="text-md text-gray-800 font-semibold">
+                @{userinfo.username}
+              </h3>
             </div>
             {/* body */}
             <div className="relative px-6 flex-auto ">
               <Tabs>
-                <Tab label="Following">
-                  <div className="pt-1 md:pb-0 max-sm:min-w-[90vw] overflow-auto max-h-[30vh]">
+                <Tab label="Following" className="text-xs">
+                  <div className="pt-1 md:pb-0 max-sm:min-w-[80vw] overflow-auto max-h-[30vh]">
                     <div className="flow-root">
                       <ul className="divide-y divide-gray-200">
                         {following.length > 0 ? (
@@ -65,8 +67,8 @@ function FollowModal({ setFollowModal, userinfo, userData }) {
                           <li className="py-3">
                             <div className="flex items-center justify-center space-x-1">
                               <TbFaceIdError className="h-6 w-6 text-orange-400" />
-                              <p className="text-md font-medium text-gray-900 truncate text-center">
-                                Start by following someone!
+                              <p className="text-xs font-medium text-gray-900 truncate text-center">
+                                Currently not following anyone..
                               </p>
                             </div>
                           </li>
@@ -76,7 +78,7 @@ function FollowModal({ setFollowModal, userinfo, userData }) {
                   </div>
                 </Tab>
                 <Tab label="Followers">
-                  <div className="pt-1 pb-24 md:pb-0 max-sm:min-w-[90vw]">
+                  <div className="pt-1 md:pb-0 max-sm:min-w-[80vw] overflow-auto max-h-[30vh]">
                     <div className="flow-root">
                       <ul className="divide-y divide-gray-200">
                         {followers.length > 0 ? (
@@ -94,8 +96,8 @@ function FollowModal({ setFollowModal, userinfo, userData }) {
                           <li className="py-3">
                             <div className="flex items-center justify-center space-x-1">
                               <TbFaceIdError className="h-6 w-6 text-orange-400" />
-                              <p className="text-md font-medium text-gray-900 truncate text-center">
-                                No users found..
+                              <p className="text-xs font-medium text-gray-900 truncate text-center">
+                                No followers found..
                               </p>
                             </div>
                           </li>

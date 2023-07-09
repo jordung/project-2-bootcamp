@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext, WoofsContext } from "../App";
+import { useContext, useState } from "react";
+import { UserContext, UserDataContext, WoofsContext } from "../App";
 import { Tabs, Tab } from "../components/Tabs";
-import { ref as databaseRef, onValue } from "firebase/database";
-import { database } from "../firebase";
 import SearchedUserCard from "../components/SearchedUserCard";
 import { TbFaceIdError } from "react-icons/tb";
 import { BiSolidDog } from "react-icons/bi";
@@ -12,21 +10,12 @@ import WoofCard from "../components/WoofCard";
 function Search() {
   const { user } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
+  const userData = useContext(UserDataContext);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedQuery, setSearchedQuery] = useState("");
-  const [userData, setUserData] = useState();
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [searchedWoofs, setSearchedWoofs] = useState([]);
-
-  const DB_USERINFO_KEY = "userinfo/";
-
-  useEffect(() => {
-    const userDataRef = databaseRef(database, DB_USERINFO_KEY);
-    onValue(userDataRef, (snapshot) => {
-      setUserData(snapshot.val());
-    });
-  }, []);
 
   const formatTime = (date) => {
     const now = new Date();

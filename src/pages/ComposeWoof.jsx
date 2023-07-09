@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { GoArrowLeft, GoImage, GoTrash } from "react-icons/go";
 // import { HiOutlineGif } from "react-icons/hi2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 
 import {
@@ -15,6 +15,7 @@ import { database, storage } from "../firebase";
 
 function ComposeWoof() {
   const { user, userinfo } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const [textInput, setTextInput] = useState("");
   const [inputCounter, setInputCounter] = useState(280);
@@ -60,12 +61,13 @@ function ComposeWoof() {
     if (!imageInput) {
       //post woof without image
       writeData(null);
+      navigate("/home");
     } else {
       const fullStorageRef = storageRef(storage, STORAGE_KEY + imageName);
-
       uploadBytes(fullStorageRef, imageFile).then((snapshot) => {
         getDownloadURL(fullStorageRef).then((url) => {
           writeData(url);
+          navigate("/home");
         });
       });
     }
@@ -99,6 +101,12 @@ function ComposeWoof() {
             maxLength="280"
             value={textInput}
             onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleSubmit();
+              }
+            }}
           />
           {imageInput && (
             <div className="mb-5 flex flex-col">
