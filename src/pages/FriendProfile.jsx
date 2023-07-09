@@ -3,7 +3,7 @@ import WoofCard from "../components/WoofCard";
 // import mary from "../assets/mary.jpg";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { UserContext, WoofsContext } from "../App";
+import { UserContext, UserDataContext, WoofsContext } from "../App";
 import { ref as databaseRef, onValue, update } from "firebase/database";
 import { database } from "../firebase";
 import FollowModal from "../components/FollowModal";
@@ -11,22 +11,16 @@ import FollowModal from "../components/FollowModal";
 function FriendProfile() {
   const { user } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
+  const userData = useContext(UserDataContext);
+
   const navigate = useNavigate();
 
   const [profileInfo, setProfileInfo] = useState({});
   const [following, setFollowing] = useState();
   const [followModal, setFollowModal] = useState(false);
-  const [userData, setUserData] = useState();
 
   const { id } = useParams();
   const DB_USERINFO_KEY = `userinfo/`;
-
-  useEffect(() => {
-    const userDataRef = databaseRef(database, DB_USERINFO_KEY);
-    onValue(userDataRef, (snapshot) => {
-      setUserData(snapshot.val());
-    });
-  }, [DB_USERINFO_KEY]);
 
   useEffect(() => {
     const friendInfoRef = databaseRef(database, DB_USERINFO_KEY + id);
@@ -177,6 +171,7 @@ function FriendProfile() {
                   .map((woof) => (
                     <WoofCard
                       key={woof.key}
+                      woofKey={woof.key}
                       profilePicture={woof.val.profilePicture}
                       name={woof.val.name}
                       userName={woof.val.username}

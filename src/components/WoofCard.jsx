@@ -12,6 +12,7 @@ import { remove, ref as databaseRef, update } from "firebase/database";
 import { deleteObject, ref as storageRef } from "firebase/storage";
 import { useContext, useState } from "react";
 import { UserContext } from "../App";
+import CommentModal from "./CommentModal";
 
 function WoofCard(props) {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function WoofCard(props) {
   const [liked, setLiked] = useState(
     props.likes && props.likes[user.uid] ? true : false
   );
+  const [commentModal, setCommentModal] = useState(false);
 
   const DB_WOOFS_KEY = "/woofs";
 
@@ -109,29 +111,43 @@ function WoofCard(props) {
                 />
               </div>
             )}
-            <div className="mx-5 mt-2 mb-2 w-70 text-gray-500 flex justify-between md:w-5/6 md:self-center md:mt-5">
-              <div className="flex gap-2">
+            <div className="mx-5 mt-2 mb-2 w-70 text-gray-500 flex justify-between md:w-5/6 md:self-center md:mt-3">
+              <div
+                className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300"
+                onClick={() => setCommentModal(true)}
+              >
                 <GoComment
-                  className="w-5 h-5 hover:text-orange-400 transition duration-300 
+                  className="w-5 h-5 group-hover:text-sky-700 transition duration-300 
                       ease-in-out cursor-pointer"
                 />
-                <p className="text-sm">{props.comments}</p>
+                <p className="text-sm group-hover:text-sky-700 cursor-pointer transition-all duration-300 ease-in-out">
+                  {Object.keys(props.comments).length}
+                </p>
               </div>
-              <div className="flex gap-2">
+              {commentModal && (
+                <CommentModal setCommentModal={setCommentModal} props={props} />
+              )}
+              <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
                 <GoGitCompare
-                  className="w-5 h-5 hover:text-orange-400 transition duration-300 
-                      ease-in-out cursor-pointer"
+                  className="w-5 h-5 group-hover:text-emerald-700 transition duration-300 
+                  ease-in-out cursor-pointer"
                 />
-                <p className="text-sm">{props.rewoofs}</p>
+                <p className="text-sm group-hover:text-emerald-700 cursor-pointer transition-all duration-300 ease-in-out">
+                  {props.rewoofs}
+                </p>
               </div>
-              <div className="flex gap-2" onClick={() => handleLike()}>
+              <div
+                className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300"
+                onClick={() => handleLike()}
+              >
                 <GoFlame
                   style={
                     props.likes && props.likes[user.uid]
                       ? { color: "#fb923c" }
                       : {}
                   }
-                  className="w-5 h-5 transition duration-300 ease-in-out cursor-pointer"
+                  className="w-5 h-5 group-hover:text-orange-400 transition duration-300 
+                  ease-in-out cursor-pointer"
                 />
                 <p
                   style={
@@ -139,25 +155,29 @@ function WoofCard(props) {
                       ? { color: "#fb923c" }
                       : {}
                   }
-                  className="text-sm"
+                  className="text-sm group-hover:text-orange-400 cursor-pointer transition-all duration-300 ease-in-out"
                 >
                   {props.likes ? Object.keys(props.likes).length : 0}
                 </p>
               </div>
-              <GoShare
-                className="w-5 h-5 hover:text-orange-400 transition duration-300 
-                      ease-in-out cursor-pointer"
-              />
+              <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
+                <GoShare
+                  className="w-5 h-5 group-hover:text-pink-300 transition duration-300 
+                ease-in-out cursor-pointer"
+                />
+              </div>
               {props.canDelete && (
-                <button
-                  onClick={() => handleDeleteWoof(props.woofKey, props.image)}
-                  className="text-sm text-gray-500 hover:text-red-500 focus:outline-none"
-                >
-                  <GoTrash
-                    className="w-5 h-5 hover:text-orange-400 transition duration-300 
+                <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
+                  <button
+                    onClick={() => handleDeleteWoof(props.woofKey, props.image)}
+                    className="focus:outline-none"
+                  >
+                    <GoTrash
+                      className="w-5 h-5 hover:text-red-400 transition duration-300 
                       ease-in-out cursor-pointer"
-                  />
-                </button>
+                    />
+                  </button>
+                </div>
               )}
             </div>
           </div>

@@ -1,20 +1,19 @@
 import { Tabs, Tab } from "../components/Tabs";
 import WoofCard from "../components/WoofCard";
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { UserContext, WoofsContext } from "../App";
+import { useContext, useState } from "react";
+import { UserContext, UserDataContext, WoofsContext } from "../App";
 import EditProfileModal from "../components/EditProfileModal";
 import FollowModal from "../components/FollowModal";
-import { ref as databaseRef, onValue } from "firebase/database";
-import { database } from "../firebase";
 
 function Profile({ handleSignOut }) {
   const { user, userinfo } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
+  const userData = useContext(UserDataContext);
 
   const [editProfileModal, setEditProfileModal] = useState(false);
   const [followModal, setFollowModal] = useState(false);
-  const [userData, setUserData] = useState();
+
   const formatTime = (date) => {
     const now = new Date();
     const diffInSeconds = Math.abs(now - date) / 1000;
@@ -32,15 +31,6 @@ function Profile({ handleSignOut }) {
       return "now";
     }
   };
-
-  const DB_USERINFO_KEY = "userinfo/";
-
-  useEffect(() => {
-    const userDataRef = databaseRef(database, DB_USERINFO_KEY);
-    onValue(userDataRef, (snapshot) => {
-      setUserData(snapshot.val());
-    });
-  }, []);
 
   return (
     <div className="w-full px-4 flex flex-col justify-center items-start md:border md:border-gray-200 md:rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-7 md:mt-10">

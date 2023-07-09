@@ -117,7 +117,7 @@ function Navbar({ handleSignOut }) {
 
         <Link
           to="/"
-          className="hidden lg:flex items-center gap-2 group"
+          className="hidden md:flex items-center gap-2 group"
           onClick={() => handleSignOut()}
         >
           <GoSignOut className="hidden md:inline-block md:h-8 md:w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
