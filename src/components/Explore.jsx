@@ -1,9 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ToolTip from "./ToolTip";
 import { ref as databaseRef, get } from "firebase/database";
 import { database } from "../firebase";
+import WoofCard from "./WoofCard";
+import { UserContext, WoofsContext } from "../App";
 
 function Explore() {
   const location = useLocation();
@@ -13,6 +15,8 @@ function Explore() {
 
   const DB_USERINFO_KEY = "userinfo/";
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+  const woofs = useContext(WoofsContext);
 
   useEffect(() => {
     const fetchUserData = () => {
@@ -57,6 +61,24 @@ function Explore() {
     setShowToolTip(null);
   };
 
+  const formatTime = (date) => {
+    const now = new Date();
+    const diffInSeconds = Math.abs(now - date) / 1000;
+    const days = Math.floor(diffInSeconds / 86400);
+    const hours = Math.floor(diffInSeconds / 3600) % 24;
+    const minutes = Math.floor(diffInSeconds / 60) % 60;
+
+    if (days > 0) {
+      return `${days}d`;
+    } else if (hours > 0) {
+      return `${hours}h`;
+    } else if (minutes > 0) {
+      return `${minutes}m`;
+    } else {
+      return "now";
+    }
+  };
+
   useEffect(() => {
     const apiKey = process.env.REACT_APP_NEWS_API_KEY;
     const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=30`;
@@ -87,7 +109,6 @@ function Explore() {
   ) {
     return null;
   }
-
   return (
     <div className="bg-white min-h-screen pb-24">
       <div className="w-full px-2 mt-3 bg-white rounded-xl flex flex-col md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-10 md:pb-5 md:mb-0 md:border md:border-gray-200">
@@ -129,7 +150,32 @@ function Explore() {
           Favourite Woofs
         </p>
         <div className="p-4 md:flex md:flex-col md:justify-center md:items-center md:pb-4">
-          <ul className="divide-y divide-gray-200">hahaha</ul>
+          <ul className="divide-y divide-gray-200">
+            {woofs
+              .sort(
+                (a, b) =>
+                  (b.val.likes ? Object.keys(b.val.likes).length : 0) -
+                  (a.val.likes ? Object.keys(a.val.likes).length : 0)
+              )
+              .slice(0, 2)
+              .map((woof) => (
+                <WoofCard
+                  key={woof.key}
+                  woofKey={woof.key}
+                  user={woof.val.user}
+                  profilePicture={woof.val.profilePicture}
+                  name={woof.val.name}
+                  userName={woof.val.username}
+                  dateTime={formatTime(new Date(woof.val.date))}
+                  content={woof.val.woof}
+                  comments={woof.val.comments ? woof.val.comments : 0}
+                  rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
+                  likes={woof.val.likes}
+                  image={woof.val.url ? woof.val.url : null}
+                  canDelete={woof.val.user === user.uid}
+                />
+              ))}
+          </ul>
         </div>
       </div>
       <div className="w-full mt-3 bg-white rounded-xl flex flex-col md:w-3/5 md:ml-72 shadow-lg p-5 md:pb-10 md:mb-0 border border-gray-200">
