@@ -6,6 +6,7 @@ import { ref as databaseRef, get } from "firebase/database";
 import { database } from "../firebase";
 import WoofCard from "./WoofCard";
 import { UserContext, WoofsContext } from "../App";
+import { formatTime } from "../utils/utils";
 
 function Explore() {
   const location = useLocation();
@@ -61,27 +62,9 @@ function Explore() {
     setShowToolTip(null);
   };
 
-  const formatTime = (date) => {
-    const now = new Date();
-    const diffInSeconds = Math.abs(now - date) / 1000;
-    const days = Math.floor(diffInSeconds / 86400);
-    const hours = Math.floor(diffInSeconds / 3600) % 24;
-    const minutes = Math.floor(diffInSeconds / 60) % 60;
-
-    if (days > 0) {
-      return `${days}d`;
-    } else if (hours > 0) {
-      return `${hours}h`;
-    } else if (minutes > 0) {
-      return `${minutes}m`;
-    } else {
-      return "now";
-    }
-  };
-
   useEffect(() => {
     const apiKey = process.env.REACT_APP_NEWS_API_KEY;
-    const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=30`;
+    const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=50`;
 
     axios
       .get(url)
@@ -109,6 +92,7 @@ function Explore() {
   ) {
     return null;
   }
+  console.log(news);
   return (
     <div className="bg-white min-h-screen pb-24">
       <div className="w-full px-2 mt-3 bg-white rounded-xl flex flex-col md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-10 md:pb-5 md:mb-0 md:border md:border-gray-200">

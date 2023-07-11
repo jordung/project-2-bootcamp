@@ -16,7 +16,6 @@ import Welcome from "./pages/Welcome";
 import Homepage from "./pages/Homepage";
 import Messages from "./pages/Messages";
 import Search from "./pages/Search";
-import Notifications from "./pages/Notifications";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
@@ -122,7 +121,6 @@ function App() {
               <Route path="home" element={<Homepage />} />
               <Route path="messages" element={<Messages />} />
               <Route path="search" element={<Search />} />
-              <Route path="notifications" element={<Notifications />} />
               <Route path="composeWoof" element={<ComposeWoof />} />
               <Route path="newProfile" element={<NewProfile />} />
               <Route path="explore" element={<Explore />} />
