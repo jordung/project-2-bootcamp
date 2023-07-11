@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import ToolTip from "./ToolTip";
+import ToolTip from "../components/ToolTip";
 import { ref as databaseRef, get } from "firebase/database";
 import { database } from "../firebase";
-import WoofCard from "./WoofCard";
-import { UserContext, WoofsContext } from "../App";
+import WoofCard from "../components/WoofCard";
+import { WoofsContext } from "../App";
 
 function Explore() {
   const location = useLocation();
@@ -15,7 +15,6 @@ function Explore() {
 
   const DB_USERINFO_KEY = "userinfo/";
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
 
   useEffect(() => {
@@ -100,15 +99,6 @@ function Explore() {
       });
   }, []);
 
-  if (
-    location.pathname === "/" ||
-    location.pathname === "/login" ||
-    location.pathname === "/register" ||
-    location.pathname === "/newProfile" ||
-    location.pathname === "/404"
-  ) {
-    return null;
-  }
   return (
     <div className="bg-white min-h-screen pb-24">
       <div className="w-full px-2 mt-3 bg-white rounded-xl flex flex-col md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-10 md:pb-5 md:mb-0 md:border md:border-gray-200">
@@ -172,7 +162,6 @@ function Explore() {
                   rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
                   likes={woof.val.likes}
                   image={woof.val.url ? woof.val.url : null}
-                  canDelete={woof.val.user === user.uid}
                 />
               ))}
           </ul>

@@ -1,11 +1,5 @@
 import { BsDot } from "react-icons/bs";
-import {
-  GoShare,
-  GoComment,
-  GoGitCompare,
-  GoFlame,
-  GoTrash,
-} from "react-icons/go";
+import { GoComment, GoGitCompare, GoFlame, GoTrash } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
 import { database, storage } from "../firebase";
 import { remove, ref as databaseRef, update } from "firebase/database";
@@ -21,11 +15,10 @@ function WoofCard(props) {
   const [liked, setLiked] = useState(
     props.likes && props.likes[user.uid] ? true : false
   );
+  const [commentModal, setCommentModal] = useState(false);
   const [rewoof, setRewoof] = useState(
     props.rewoofs && props.rewoofs[user.uid] ? true : false
   );
-  const [commentModal, setCommentModal] = useState(false);
-
   const DB_WOOFS_KEY = "/woofs";
 
   const handleLocation = () => {
@@ -53,34 +46,6 @@ function WoofCard(props) {
       .catch((error) => {
         console.log("Error deleting woof:", error);
       });
-  };
-  const handleRewoof = () => {
-    if (!rewoof) {
-      console.log("rewoof!!");
-      update(databaseRef(database, DB_WOOFS_KEY + `/${props.woofKey}`), {
-        [`rewoofs/${user.uid}`]: true,
-      })
-        .then(() => {
-          setRewoof(true);
-        })
-        .catch((error) => {
-          console.log("Error while rewoofing: ", error);
-        });
-    } else {
-      console.log("unrewoofed");
-      remove(
-        databaseRef(
-          database,
-          DB_WOOFS_KEY + `/${props.woofKey}/rewoofs/${user.uid}`
-        )
-      )
-        .then(() => {
-          setRewoof(false);
-        })
-        .catch((error) => {
-          console.log("Error while un-rewoofing.: ", error);
-        });
-    }
   };
 
   const handleLike = () => {
@@ -111,6 +76,36 @@ function WoofCard(props) {
         });
     }
   };
+
+  const handleRewoof = () => {
+    if (!rewoof) {
+      console.log("rewoof!!");
+      update(databaseRef(database, DB_WOOFS_KEY + `/${props.woofKey}`), {
+        [`rewoofs/${user.uid}`]: true,
+      })
+        .then(() => {
+          setRewoof(true);
+        })
+        .catch((error) => {
+          console.log("Error while rewoofing: ", error);
+        });
+    } else {
+      console.log("unrewoofed");
+      remove(
+        databaseRef(
+          database,
+          DB_WOOFS_KEY + `/${props.woofKey}/rewoofs/${user.uid}`
+        )
+      )
+        .then(() => {
+          setRewoof(false);
+        })
+        .catch((error) => {
+          console.log("Error while un-rewoofing.: ", error);
+        });
+    }
+  };
+
   return (
     <li className="py-3 px-5">
       <div className="flex items-start flex-col">
@@ -206,12 +201,6 @@ function WoofCard(props) {
                 >
                   {props.likes ? Object.keys(props.likes).length : 0}
                 </p>
-              </div>
-              <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
-                <GoShare
-                  className="w-5 h-5 group-hover:text-pink-300 transition duration-300 
-                ease-in-out cursor-pointer"
-                />
               </div>
               {props.canDelete && (
                 <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">

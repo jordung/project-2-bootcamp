@@ -4,7 +4,6 @@ import { Tabs, Tab } from "../components/Tabs";
 import SearchedUserCard from "../components/SearchedUserCard";
 import { TbFaceIdError } from "react-icons/tb";
 import { BiSolidDog } from "react-icons/bi";
-import { AiOutlineClear } from "react-icons/ai";
 import WoofCard from "../components/WoofCard";
 
 function Search() {
@@ -118,6 +117,7 @@ function Search() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               required
+              autoFocus
             />
             <button
               type="submit"
@@ -139,10 +139,10 @@ function Search() {
               </span>
             </div>
             <button
-              className="uppercase text-white text-xs bg-gray-800 py-2 px-2 rounded-lg hover:bg-gray-600 transition duration-300"
+              className="uppercase text-white text-xs bg-gray-500 py-1 px-2 rounded-lg hover:bg-gray-800 transition duration-300"
               onClick={handleClearSearch}
             >
-              <AiOutlineClear className="h-5 w-5 text-white" />
+              Clear
             </button>
           </div>
         )}

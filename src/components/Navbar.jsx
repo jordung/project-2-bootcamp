@@ -1,4 +1,4 @@
-import { GoHome, GoSearch, GoBell, GoMail, GoSignOut } from "react-icons/go";
+import { GoHome, GoSearch, GoMegaphone, GoSignOut } from "react-icons/go";
 import { PiCompass } from "react-icons/pi";
 import { FaPaw } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
@@ -42,7 +42,7 @@ function Navbar({ handleSignOut }) {
             alt="profile"
           />
           <p
-            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+            className={`hidden md:inline-block text-sm font-medium text-gray-500 group-hover:text-orange-400 transition duration-300 ${
               location.pathname === "/profile" && "text-orange-400"
             }`}
           >
@@ -56,7 +56,7 @@ function Navbar({ handleSignOut }) {
             }`}
           />
           <p
-            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+            className={`hidden md:inline-block text-sm font-medium text-gray-500 group-hover:text-orange-400 transition duration-300 ${
               location.pathname === "/home" && "text-orange-400"
             }`}
           >
@@ -70,7 +70,7 @@ function Navbar({ handleSignOut }) {
             }`}
           />
           <p
-            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+            className={`hidden md:inline-block text-sm font-medium text-gray-500 group-hover:text-orange-400 transition duration-300 ${
               location.pathname === "/search" && "text-orange-400"
             }`}
           >
@@ -87,7 +87,7 @@ function Navbar({ handleSignOut }) {
             }`}
           />
           <p
-            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+            className={`hidden md:inline-block text-sm font-medium text-gray-500 group-hover:text-orange-400 transition duration-300 ${
               location.pathname === "/explore" && "text-orange-400"
             }`}
           >
@@ -96,22 +96,22 @@ function Navbar({ handleSignOut }) {
         </Link>
         {/* <Link to="notifications" className="flex items-center gap-2 group">
           <GoBell className="h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <p className="hidden md:inline-block text-sm font-medium text-gray-500 group-hover:text-orange-400 transition duration-300">
             Notifications
           </p>
         </Link> */}
-        <Link to="messages" className="flex items-center gap-2 group">
-          <GoMail
+        <Link to="chatterbox" className="flex items-center gap-2 group">
+          <GoMegaphone
             className={`h-8 w-8 text-gray-500 group-hover:text-orange-400 transition duration-300 ${
-              location.pathname === "/messages" && "text-orange-400"
+              location.pathname === "/chatterbox" && "text-orange-400"
             }`}
           />
           <p
-            className={`hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300 ${
-              location.pathname === "/messages" && "text-orange-400"
+            className={`hidden md:inline-block text-sm font-medium text-gray-500 group-hover:text-orange-400 transition duration-300 ${
+              location.pathname === "/chatterbox" && "text-orange-400"
             }`}
           >
-            Messages
+            Chatterbox
           </p>
         </Link>
 
@@ -121,7 +121,7 @@ function Navbar({ handleSignOut }) {
           onClick={() => handleSignOut()}
         >
           <GoSignOut className="hidden md:inline-block md:h-8 md:w-8 text-gray-500 group-hover:text-orange-400 transition duration-300" />
-          <p className="hidden md:inline-block text-sm font-bold text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <p className="hidden md:inline-block text-sm font-medium text-gray-500 group-hover:text-orange-400 transition duration-300">
             Sign Out
           </p>
         </Link>

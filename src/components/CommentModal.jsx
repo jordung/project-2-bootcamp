@@ -21,7 +21,6 @@ function CommentModal({ setCommentModal, props }) {
 
   useEffect(() => {
     const commentsRef = databaseRef(database, DB_WOOFS_KEY);
-
     const currentWoof = woofs.filter((woof) => woof.key === props.woofKey)[0]
       .val.comments;
     if (currentWoof !== undefined) {
@@ -252,7 +251,7 @@ function CommentModal({ setCommentModal, props }) {
                 </div>
                 <input
                   type="text"
-                  className="block w-full py-4 pl-12 pr-12 text-xs text-gray-900 border border-gray-300 rounded-lg focus:outline-none"
+                  className="block w-full py-4 pl-12 pr-12 text-sm text-gray-900 border border-gray-300 rounded-lg focus:outline-none"
                   placeholder="Reply"
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
