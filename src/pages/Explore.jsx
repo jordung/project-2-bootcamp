@@ -1,12 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import ToolTip from "./ToolTip";
+import ToolTip from "../components/ToolTip";
 import { ref as databaseRef, get } from "firebase/database";
 import { database } from "../firebase";
-import WoofCard from "./WoofCard";
-import { UserContext, WoofsContext } from "../App";
-import { formatTime } from "../utils/utils";
+import WoofCard from "../components/WoofCard";
+import { WoofsContext } from "../App";
 
 function Explore() {
   const location = useLocation();
@@ -16,7 +15,6 @@ function Explore() {
 
   const DB_USERINFO_KEY = "userinfo/";
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
   const woofs = useContext(WoofsContext);
 
   useEffect(() => {
@@ -62,9 +60,27 @@ function Explore() {
     setShowToolTip(null);
   };
 
+  const formatTime = (date) => {
+    const now = new Date();
+    const diffInSeconds = Math.abs(now - date) / 1000;
+    const days = Math.floor(diffInSeconds / 86400);
+    const hours = Math.floor(diffInSeconds / 3600) % 24;
+    const minutes = Math.floor(diffInSeconds / 60) % 60;
+
+    if (days > 0) {
+      return `${days}d`;
+    } else if (hours > 0) {
+      return `${hours}h`;
+    } else if (minutes > 0) {
+      return `${minutes}m`;
+    } else {
+      return "now";
+    }
+  };
+
   useEffect(() => {
     const apiKey = process.env.REACT_APP_NEWS_API_KEY;
-    const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=50`;
+    const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=30`;
 
     axios
       .get(url)
@@ -83,16 +99,6 @@ function Explore() {
       });
   }, []);
 
-  if (
-    location.pathname === "/" ||
-    location.pathname === "/login" ||
-    location.pathname === "/register" ||
-    location.pathname === "/newProfile" ||
-    location.pathname === "/404"
-  ) {
-    return null;
-  }
-  console.log(news);
   return (
     <div className="bg-white min-h-screen pb-24">
       <div className="w-full px-2 mt-3 bg-white rounded-xl flex flex-col md:w-3/5 md:ml-72 md:shadow-lg md:p-5 md:mt-10 md:pb-5 md:mb-0 md:border md:border-gray-200">
@@ -156,7 +162,6 @@ function Explore() {
                   rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
                   likes={woof.val.likes}
                   image={woof.val.url ? woof.val.url : null}
-                  canDelete={woof.val.user === user.uid}
                 />
               ))}
           </ul>

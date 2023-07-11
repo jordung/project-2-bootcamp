@@ -7,6 +7,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { useState } from "react";
+import { GoXCircle } from "react-icons/go";
 
 function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
   const [firstName, setFirstName] = useState("");
@@ -208,14 +209,23 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
           {/*content*/}
           <div className="rounded-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             {/*header*/}
-            <div className="flex items-center justify-between p-5 border-t border-solid border-slate-200 rounded-t">
-              <h3 className="text-2xl font-semibold">Edit Profile</h3>
+            <div className="flex items-center justify-between border-solid border-slate-200 rounded-b ">
+              <h2 className="px-4 py-2 text-gray-800 font-bold uppercase text-xs">
+                Edit Profile
+              </h2>
+              <button
+                className="px-2 py-2 text-sm outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => setEditProfileModal(false)}
+              >
+                <GoXCircle className="h-5 w-5 hover:text-red-400 transition duration-300" />
+              </button>
             </div>
             {/*body*/}
             <div className="relative px-6 py-5 flex-auto">
               <form className="flex flex-col items-center">
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900">
+                  <label className="block mb-2 text-xs font-medium text-gray-900">
                     Profile Banner
                   </label>
                   <label htmlFor="banner-input">
@@ -245,7 +255,7 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                 </div>
 
                 <div className="w-full flex flex-col mt-2">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                  <label className="block mb-2 text-xs font-medium text-gray-900 ">
                     Profile Picture
                   </label>
                   <label htmlFor="image-input">
@@ -277,11 +287,11 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                 </div>
                 <div className="md:flex md:gap-4 md:w-5/6">
                   <div className="w-72 mt-5 md:w-full">
-                    <label className="block mb-2 text-sm font-medium text-gray-900">
+                    <label className="block mb-2 text-xs font-medium text-gray-900">
                       First Name
                     </label>
                     <input
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:border-orange-500 block w-full p-2.5"
                       defaultValue={userinfo.name.split(" ")[0]}
                       required
                       name="firstname"
@@ -291,11 +301,11 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                     />
                   </div>
                   <div className="w-72 mt-5 md:w-full">
-                    <label className="block mb-2 text-sm font-medium text-gray-900">
+                    <label className="block mb-2 text-xs font-medium text-gray-900">
                       Last Name
                     </label>
                     <input
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:border-orange-500 block w-full p-2.5"
                       defaultValue={userinfo.name.split(" ")[1]}
                       required
                       name="lastname"
@@ -306,11 +316,11 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                   </div>
                 </div>
                 <div className="w-72 mt-5 md:w-5/6">
-                  <label className="block mb-2 text-sm font-medium text-gray-900">
+                  <label className="block mb-2 text-xs font-medium text-gray-900">
                     Username
                   </label>
                   <input
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:border-orange-500 block w-full p-2.5"
                     defaultValue={userinfo.username}
                     required
                     name="username"
@@ -320,11 +330,11 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                   />
                 </div>
                 <div className="w-72 mt-5 md:w-5/6">
-                  <label className="block mb-2 text-sm font-medium text-gray-900">
+                  <label className="block mb-2 text-xs font-medium text-gray-900">
                     Bio
                   </label>
                   <input
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-500 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:border-orange-500 block w-full p-2.5"
                     defaultValue={userinfo.bio}
                     name="userbio"
                     type="text"
@@ -341,18 +351,11 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
                 updates to take effect.
               </p>
               <button
-                className="bg-orange-400 text-white active:bg-orange-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 md:w-5/6"
+                className="bg-orange-400 w-5/6 text-white active:bg-orange-600 font-bold uppercase text-xs px-6 py-3 rounded-lg shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 md:w-5/6"
                 type="button"
                 onClick={handleUpdateProfile}
               >
                 Update Profile
-              </button>
-              <button
-                className="text-red-400 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-                onClick={handleEditProfileModalClose}
-              >
-                Close
               </button>
             </div>
           </div>

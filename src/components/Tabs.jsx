@@ -21,7 +21,7 @@ const Tabs = ({ children }) => {
               activeTab === child.props.label
                 ? "border-b-2 border-orange-400"
                 : ""
-            } flex-1 font-bold text-sm pt-5 pb-2 text-gray-800`}
+            } flex-1 font-bold text-xs pt-5 pb-2 uppercase text-gray-800`}
             onClick={(e) => handleClick(e, child.props.label)}
           >
             {child.props.label}

@@ -16,10 +16,10 @@ function SearchedUserCard(props) {
           />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-md font-medium text-gray-900 group-hover:text-orange-400 transition duration-300">
+          <p className="text-md font-medium text-xs text-gray-900 group-hover:text-orange-400 transition duration-300">
             {props.name}
           </p>
-          <p className="text-md text-gray-500 group-hover:text-orange-400 transition duration-300">
+          <p className="text-md text-gray-500 text-xs group-hover:text-orange-400 transition duration-300">
             {props.username}
           </p>
         </div>
