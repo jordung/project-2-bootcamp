@@ -181,9 +181,6 @@ function ChatModal({ setSelectedChat, chat }) {
                               @{userData[message.fromUserId].username}
                             </span>
                           </p>
-                          <p className="text-xs mr-3 text-gray-500 md:text-sm">
-                            {/* <BsDot /> */}
-                          </p>
                           <p className="text-xs mr-3 text-gray-500 font-normal">
                             {formatTime(new Date(message.timestamp))}
                           </p>
@@ -199,7 +196,7 @@ function ChatModal({ setSelectedChat, chat }) {
                         className="focus:outline-none"
                       >
                         <GoTrash
-                          className="w-4 h-4 hover:text-red-400 transition duration-300 
+                          className="w-4 h-4 group-hover:text-red-400 transition duration-300 
                   ease-in-out cursor-pointer"
                         />
                       </button>

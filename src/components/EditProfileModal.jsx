@@ -216,7 +216,7 @@ function EditProfileModal({ woofs, user, userinfo, setEditProfileModal }) {
               <button
                 className="px-2 py-2 text-sm outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => setEditProfileModal(false)}
+                onClick={handleEditProfileModalClose}
               >
                 <GoXCircle className="h-5 w-5 hover:text-red-400 transition duration-300" />
               </button>

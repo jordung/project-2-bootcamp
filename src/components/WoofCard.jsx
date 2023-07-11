@@ -1,5 +1,6 @@
 import { BsDot } from "react-icons/bs";
-import { GoComment, GoGitCompare, GoFlame, GoTrash } from "react-icons/go";
+import { GoComment, GoFlame, GoTrash } from "react-icons/go";
+import { HiArrowUturnRight } from "react-icons/hi2";
 import { useLocation, useNavigate } from "react-router-dom";
 import { database, storage } from "../firebase";
 import { remove, ref as databaseRef, update } from "firebase/database";
@@ -117,6 +118,24 @@ function WoofCard(props) {
             onClick={() => navigate(`/profile/${props.user}`)}
           />
           <div className="w-full flex flex-col">
+            {props.rewoofs &&
+            handleLocation() &&
+            Object.keys(props.rewoofs).includes(user.uid) ? (
+              <span className="flex gap-2 ml-5 my-1">
+                <HiArrowUturnRight className="w-4 h-4 text-orange-400" />
+                <p className="text-xs mr-3 text-orange-400">You rewoofed</p>
+              </span>
+            ) : props.rewoofs &&
+              props.profileUsername &&
+              props.profileId &&
+              Object.keys(props.rewoofs).includes(props.profileId) ? (
+              <span className="flex gap-2 ml-5 my-1">
+                <HiArrowUturnRight className="w-4 h-4 text-orange-400" />
+                <p className="text-xs mr-3 text-orange-400">
+                  @{props.profileUsername} rewoofed
+                </p>
+              </span>
+            ) : null}
             <div className="flex items-center">
               <p className="text-sm mx-5 font-medium text-gray-900 hover:text-orange-400 cursor-pointer transition-all duration-300 ease-in-out">
                 <span onClick={() => navigate(`/profile/${props.user}`)}>
@@ -163,17 +182,17 @@ function WoofCard(props) {
                 className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300"
                 onClick={() => handleRewoof()}
               >
-                <GoGitCompare
-                  className={`w-5 h-5 transition duration-300 ease-in-out cursor-pointer ${
+                <HiArrowUturnRight
+                  className={`w-5 h-5 transition duration-300 ease-in-out cursor-pointer group-hover:text-green-700 ${
                     props.rewoofs && props.rewoofs[user.uid]
-                      ? "text-green-500"
+                      ? "text-green-700"
                       : "text-gray-400"
                   }`}
                 />
                 <p
-                  className={`text-sm cursor-pointer transition-all duration-300 ease-in-out ${
+                  className={`text-sm cursor-pointer transition-all duration-300 ease-in-out group-hover:text-green-700 ${
                     props.rewoofs && props.rewoofs[user.uid]
-                      ? "text-green-500"
+                      ? "text-green-700"
                       : "text-gray-400"
                   }`}
                 >
@@ -186,14 +205,14 @@ function WoofCard(props) {
                 onClick={() => handleLike()}
               >
                 <GoFlame
-                  className={`w-5 h-5 transition duration-300 ease-in-out cursor-pointer ${
+                  className={`w-5 h-5 transition duration-300 ease-in-out cursor-pointer group-hover:text-orange-400 ${
                     props.likes && props.likes[user.uid]
                       ? "text-orange-500"
                       : "text-gray-400"
                   }`}
                 />
                 <p
-                  className={`text-sm cursor-pointer transition-all duration-300 ease-in-out ${
+                  className={`text-sm cursor-pointer transition-all duration-300 ease-in-out group-hover:text-orange-400 ${
                     props.likes && props.likes[user.uid]
                       ? "text-orange-500"
                       : "text-gray-400"
@@ -209,31 +228,13 @@ function WoofCard(props) {
                     className="focus:outline-none"
                   >
                     <GoTrash
-                      className="w-5 h-5 hover:text-red-400 transition duration-300 
+                      className="w-5 h-5 group-hover:text-red-400 transition duration-300 
                       ease-in-out cursor-pointer"
                     />
                   </button>
                 </div>
               )}
             </div>
-            {props.rewoofs &&
-            handleLocation() &&
-            Object.keys(props.rewoofs).includes(user.uid) ? (
-              <span className="flex gap-2">
-                <GoGitCompare className="w-5 h-5" />
-                <p className="text-sm mr-3 text-gray-10">You rewoofed</p>
-              </span>
-            ) : props.rewoofs &&
-              props.profileUsername &&
-              props.profileId &&
-              Object.keys(props.rewoofs).includes(props.profileId) ? (
-              <span className="flex gap-2">
-                <GoGitCompare className="w-5 h-5" />
-                <p className="text-sm mr-3 text-gray-10">
-                  @{props.profileUsername} rewoofed
-                </p>
-              </span>
-            ) : null}
           </div>
         </div>
       </div>
