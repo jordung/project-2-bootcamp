@@ -1,11 +1,5 @@
 import { BsDot } from "react-icons/bs";
-import {
-  GoShare,
-  GoComment,
-  GoGitCompare,
-  GoFlame,
-  GoTrash,
-} from "react-icons/go";
+import { GoComment, GoGitCompare, GoFlame, GoTrash } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { database, storage } from "../firebase";
 import { remove, ref as databaseRef, update } from "firebase/database";
@@ -21,7 +15,9 @@ function WoofCard(props) {
     props.likes && props.likes[user.uid] ? true : false
   );
   const [commentModal, setCommentModal] = useState(false);
-
+  const [rewoof, setRewoof] = useState(
+    props.rewoofs && props.rewoofs[user.uid] ? true : false
+  );
   const DB_WOOFS_KEY = "/woofs";
 
   const handleDeleteWoof = (woofKey, image) => {
@@ -70,6 +66,35 @@ function WoofCard(props) {
         })
         .catch((error) => {
           console.log("Error while unliking: ", error);
+        });
+    }
+  };
+
+  const handleRewoof = () => {
+    if (!rewoof) {
+      console.log("rewoof!!");
+      update(databaseRef(database, DB_WOOFS_KEY + `/${props.woofKey}`), {
+        [`rewoofs/${user.uid}`]: true,
+      })
+        .then(() => {
+          setRewoof(true);
+        })
+        .catch((error) => {
+          console.log("Error while rewoofing: ", error);
+        });
+    } else {
+      console.log("unrewoofed");
+      remove(
+        databaseRef(
+          database,
+          DB_WOOFS_KEY + `/${props.woofKey}/rewoofs/${user.uid}`
+        )
+      )
+        .then(() => {
+          setRewoof(false);
+        })
+        .catch((error) => {
+          console.log("Error while un-rewoofing.: ", error);
         });
     }
   };
@@ -127,13 +152,28 @@ function WoofCard(props) {
               {commentModal && (
                 <CommentModal setCommentModal={setCommentModal} props={props} />
               )}
-              <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
+              <div
+                className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300"
+                onClick={() => handleRewoof()}
+              >
                 <GoGitCompare
-                  className="w-5 h-5 group-hover:text-emerald-700 transition duration-300 
+                  style={
+                    props.rewoofs && props.rewoofs[user.uid]
+                      ? { color: "#00ba7c" }
+                      : {}
+                  }
+                  className="w-5 h-5 group-hover:text-green-400 transition duration-300 
                   ease-in-out cursor-pointer"
                 />
-                <p className="text-sm group-hover:text-emerald-700 cursor-pointer transition-all duration-300 ease-in-out">
-                  {props.rewoofs}
+                <p
+                  style={
+                    props.rewoofs && props.rewoofs[user.uid]
+                      ? { color: "#00ba7c" }
+                      : {}
+                  }
+                  className="text-sm group-hover:text-green-400 cursor-pointer transition-all duration-300 ease-in-out"
+                >
+                  {props.rewoofs ? Object.keys(props.likes).length : 0}
                 </p>
               </div>
               <div
@@ -159,12 +199,6 @@ function WoofCard(props) {
                 >
                   {props.likes ? Object.keys(props.likes).length : 0}
                 </p>
-              </div>
-              <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
-                <GoShare
-                  className="w-5 h-5 group-hover:text-pink-300 transition duration-300 
-                ease-in-out cursor-pointer"
-                />
               </div>
               {props.canDelete && (
                 <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Tabs, Tab } from "./Tabs";
 import SearchedUserCard from "../components/SearchedUserCard";
 import { TbFaceIdError } from "react-icons/tb";
+import { GoXCircle } from "react-icons/go";
 
 function FollowModal({ setFollowModal, userinfo, userData }) {
   const [following, setFollowing] = useState([]);
@@ -40,10 +41,17 @@ function FollowModal({ setFollowModal, userinfo, userData }) {
           {/* content */}
           <div className="rounded-lg bg-white">
             {/* header */}
-            <div className="flex items-center justify-center px-5 pt-5 pb-0 border-solid border-slate-200 rounded-t">
-              <h3 className="text-md text-gray-800 font-semibold">
+            <div className="flex items-center justify-between border-solid border-slate-200 rounded-b ">
+              <h2 className="px-4 py-2 text-gray-800 font-bold uppercase text-xs">
                 @{userinfo.username}
-              </h3>
+              </h2>
+              <button
+                className="px-2 py-2 text-sm outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => setFollowModal(false)}
+              >
+                <GoXCircle className="h-5 w-5 hover:text-red-400 transition duration-300" />
+              </button>
             </div>
             {/* body */}
             <div className="relative px-6 flex-auto ">
@@ -109,15 +117,6 @@ function FollowModal({ setFollowModal, userinfo, userData }) {
               </Tabs>
             </div>
             {/* footer */}
-            <div className="flex flex-col items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
-              <button
-                className="text-red-400 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-                onClick={() => setFollowModal(false)}
-              >
-                Close
-              </button>
-            </div>
           </div>
         </div>
       </div>
