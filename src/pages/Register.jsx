@@ -9,6 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [passwordTooShort, setPasswordTooShort] = useState(false);
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
@@ -19,6 +20,11 @@ const Register = () => {
   }, [navigate, user.email]);
 
   useEffect(() => {
+    if (password.length < 6 && password.length > 0) {
+      setPasswordTooShort(true);
+    } else {
+      setPasswordTooShort(false);
+    }
     if (confirmPassword !== password) {
       setPasswordMismatch(true);
     } else {
@@ -83,7 +89,11 @@ const Register = () => {
               required
               onChange={(e) => setPassword(e.target.value)}
             />
-            <p className="text-gray-400 text-xs">
+            <p
+              className={`text-gray-400 text-xs ${
+                passwordTooShort === true ? "text-red-400" : ""
+              }`}
+            >
               Passwords must be longer than 6 characters.
             </p>
           </div>

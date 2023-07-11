@@ -32,6 +32,17 @@ function Profile({ handleSignOut }) {
     }
   };
 
+  const unitedWoofs = () => {
+    const ownWoofs = woofs.filter((woof) => woof.val.user === user.uid);
+
+    const rewoofedWoofs = woofs.filter(
+      (woof) =>
+        woof.val.rewoofs && Object.keys(woof.val.rewoofs).includes(user.uid)
+    );
+
+    return ownWoofs.concat(rewoofedWoofs);
+  };
+
   return (
     <div className="w-full px-4 flex flex-col justify-center items-start md:border md:border-gray-200 md:rounded-xl md:w-3/5 md:ml-72 md:shadow-lg md:p-7 md:mt-10">
       <div className="absolute -z-10 top-0 left-0 md:relative">
@@ -124,9 +135,8 @@ function Profile({ handleSignOut }) {
           <div className="pt-1 pb-24 md:pb-0 max-sm:min-w-[90vw]">
             <div className="flow-root">
               <ul className="divide-y divide-gray-200">
-                {woofs
+                {unitedWoofs()
                   .sort((a, b) => new Date(b.val.date) - new Date(a.val.date))
-                  .filter((woof) => woof.val.user === user.uid)
                   .map((woof) => (
                     <WoofCard
                       key={woof.key}
@@ -138,8 +148,8 @@ function Profile({ handleSignOut }) {
                       dateTime={formatTime(new Date(woof.val.date))}
                       content={woof.val.woof}
                       comments={woof.val.comments ? woof.val.comments : 0}
-                      rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
-                      likes={woof.val.likes ? woof.val.likes : 0}
+                      rewoofs={woof.val.rewoofs}
+                      likes={woof.val.likes}
                       image={woof.val.url ? woof.val.url : null}
                       canDelete={woof.val.user === user.uid}
                     />
