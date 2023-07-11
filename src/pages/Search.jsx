@@ -5,6 +5,7 @@ import SearchedUserCard from "../components/SearchedUserCard";
 import { TbFaceIdError } from "react-icons/tb";
 import { BiSolidDog } from "react-icons/bi";
 import WoofCard from "../components/WoofCard";
+import { formatTime } from "../utils/utils";
 
 function Search() {
   const { user } = useContext(UserContext);
@@ -15,24 +16,6 @@ function Search() {
   const [searchedQuery, setSearchedQuery] = useState("");
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [searchedWoofs, setSearchedWoofs] = useState([]);
-
-  const formatTime = (date) => {
-    const now = new Date();
-    const diffInSeconds = Math.abs(now - date) / 1000;
-    const days = Math.floor(diffInSeconds / 86400);
-    const hours = Math.floor(diffInSeconds / 3600) % 24;
-    const minutes = Math.floor(diffInSeconds / 60) % 60;
-
-    if (days > 0) {
-      return `${days}d`;
-    } else if (hours > 0) {
-      return `${hours}h`;
-    } else if (minutes > 0) {
-      return `${minutes}m`;
-    } else {
-      return "now";
-    }
-  };
 
   const handleSearch = (e) => {
     e.preventDefault();
