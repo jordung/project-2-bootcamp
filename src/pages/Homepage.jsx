@@ -89,7 +89,7 @@ function Homepage() {
                   dateTime={formatTime(new Date(woof.val.date))}
                   content={woof.val.woof}
                   comments={woof.val.comments ? woof.val.comments : 0}
-                  rewoofs={woof.val.rewoofs ? woof.val.rewoofs : 0}
+                  rewoofs={woof.val.rewoofs}
                   likes={woof.val.likes}
                   image={woof.val.url ? woof.val.url : null}
                   canDelete={woof.val.user === user.uid}

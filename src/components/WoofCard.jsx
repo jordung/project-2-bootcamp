@@ -6,7 +6,7 @@ import {
   GoFlame,
   GoTrash,
 } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { database, storage } from "../firebase";
 import { remove, ref as databaseRef, update } from "firebase/database";
 import { deleteObject, ref as storageRef } from "firebase/storage";
@@ -15,14 +15,24 @@ import { UserContext } from "../App";
 import CommentModal from "./CommentModal";
 
 function WoofCard(props) {
+  const location = useLocation();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [liked, setLiked] = useState(
     props.likes && props.likes[user.uid] ? true : false
   );
+  const [rewoof, setRewoof] = useState(
+    props.rewoofs && props.rewoofs[user.uid] ? true : false
+  );
   const [commentModal, setCommentModal] = useState(false);
 
   const DB_WOOFS_KEY = "/woofs";
+
+  const handleLocation = () => {
+    if (location.pathname === "/profile") {
+      return true;
+    }
+  };
 
   const handleDeleteWoof = (woofKey, image) => {
     const woofRef = databaseRef(database, `woofs/${woofKey}`);
@@ -43,6 +53,34 @@ function WoofCard(props) {
       .catch((error) => {
         console.log("Error deleting woof:", error);
       });
+  };
+  const handleRewoof = () => {
+    if (!rewoof) {
+      console.log("rewoof!!");
+      update(databaseRef(database, DB_WOOFS_KEY + `/${props.woofKey}`), {
+        [`rewoofs/${user.uid}`]: true,
+      })
+        .then(() => {
+          setRewoof(true);
+        })
+        .catch((error) => {
+          console.log("Error while rewoofing: ", error);
+        });
+    } else {
+      console.log("unrewoofed");
+      remove(
+        databaseRef(
+          database,
+          DB_WOOFS_KEY + `/${props.woofKey}/rewoofs/${user.uid}`
+        )
+      )
+        .then(() => {
+          setRewoof(false);
+        })
+        .catch((error) => {
+          console.log("Error while un-rewoofing.: ", error);
+        });
+    }
   };
 
   const handleLike = () => {
@@ -73,7 +111,6 @@ function WoofCard(props) {
         });
     }
   };
-
   return (
     <li className="py-3 px-5">
       <div className="flex items-start flex-col">
@@ -127,35 +164,45 @@ function WoofCard(props) {
               {commentModal && (
                 <CommentModal setCommentModal={setCommentModal} props={props} />
               )}
-              <div className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
+              <div
+                className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300"
+                onClick={() => handleRewoof()}
+              >
                 <GoGitCompare
-                  className="w-5 h-5 group-hover:text-emerald-700 transition duration-300 
-                  ease-in-out cursor-pointer"
+                  className={`w-5 h-5 transition duration-300 ease-in-out cursor-pointer ${
+                    props.rewoofs && props.rewoofs[user.uid]
+                      ? "text-green-500"
+                      : "text-gray-400"
+                  }`}
                 />
-                <p className="text-sm group-hover:text-emerald-700 cursor-pointer transition-all duration-300 ease-in-out">
-                  {props.rewoofs}
+                <p
+                  className={`text-sm cursor-pointer transition-all duration-300 ease-in-out ${
+                    props.rewoofs && props.rewoofs[user.uid]
+                      ? "text-green-500"
+                      : "text-gray-400"
+                  }`}
+                >
+                  {props.rewoofs ? Object.keys(props.rewoofs).length : 0}
                 </p>
               </div>
+
               <div
                 className="flex gap-2 group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300"
                 onClick={() => handleLike()}
               >
                 <GoFlame
-                  style={
+                  className={`w-5 h-5 transition duration-300 ease-in-out cursor-pointer ${
                     props.likes && props.likes[user.uid]
-                      ? { color: "#fb923c" }
-                      : {}
-                  }
-                  className="w-5 h-5 group-hover:text-orange-400 transition duration-300 
-                  ease-in-out cursor-pointer"
+                      ? "text-orange-500"
+                      : "text-gray-400"
+                  }`}
                 />
                 <p
-                  style={
+                  className={`text-sm cursor-pointer transition-all duration-300 ease-in-out ${
                     props.likes && props.likes[user.uid]
-                      ? { color: "#fb923c" }
-                      : {}
-                  }
-                  className="text-sm group-hover:text-orange-400 cursor-pointer transition-all duration-300 ease-in-out"
+                      ? "text-orange-500"
+                      : "text-gray-400"
+                  }`}
                 >
                   {props.likes ? Object.keys(props.likes).length : 0}
                 </p>
@@ -180,6 +227,24 @@ function WoofCard(props) {
                 </div>
               )}
             </div>
+            {props.rewoofs &&
+            handleLocation() &&
+            Object.keys(props.rewoofs).includes(user.uid) ? (
+              <span className="flex gap-2">
+                <GoGitCompare className="w-5 h-5" />
+                <p className="text-sm mr-3 text-gray-10">You rewoofed</p>
+              </span>
+            ) : props.rewoofs &&
+              props.profileUsername &&
+              props.profileId &&
+              Object.keys(props.rewoofs).includes(props.profileId) ? (
+              <span className="flex gap-2">
+                <GoGitCompare className="w-5 h-5" />
+                <p className="text-sm mr-3 text-gray-10">
+                  @{props.profileUsername} rewoofed
+                </p>
+              </span>
+            ) : null}
           </div>
         </div>
       </div>
