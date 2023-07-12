@@ -63,7 +63,7 @@ function Explore() {
 
   useEffect(() => {
     const apiKey = process.env.REACT_APP_NEWS_API_KEY;
-    const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=30`;
+    const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=50`;
 
     axios
       .get(url)
