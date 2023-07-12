@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/project-2-bootcamp/static/css/main.5b39311a.css",
+    "main.js": "/project-2-bootcamp/static/js/main.544322ec.js",
+    "static/media/welcome-bg.jpg": "/project-2-bootcamp/static/media/welcome-bg.c5aeacd76516ab9bc6c3.jpg",
+    "static/media/woofly-logo2.png": "/project-2-bootcamp/static/media/woofly-logo2.36ea61be568987939c52.png",
+    "static/media/error-page-vector.svg": "/project-2-bootcamp/static/media/error-page-vector.c8a0c7730e2ecaaa0c51b31e7325149a.svg",
+    "index.html": "/project-2-bootcamp/index.html",
+    "main.5b39311a.css.map": "/project-2-bootcamp/static/css/main.5b39311a.css.map",
+    "main.544322ec.js.map": "/project-2-bootcamp/static/js/main.544322ec.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5b39311a.css",
+    "static/js/main.544322ec.js"
+  ]
+}
