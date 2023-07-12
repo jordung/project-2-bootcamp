@@ -7,6 +7,7 @@ import { UserContext, UserDataContext, WoofsContext } from "../App";
 import { ref as databaseRef, onValue, update } from "firebase/database";
 import { database } from "../firebase";
 import FollowModal from "../components/FollowModal";
+import formatTime from "../utils/FormatDate";
 
 function FriendProfile() {
   const { user } = useContext(UserContext);
@@ -42,24 +43,6 @@ function FriendProfile() {
       navigate("/profile");
     }
   }, [user.uid, id, navigate]);
-
-  const formatTime = (date) => {
-    const now = new Date();
-    const diffInSeconds = Math.abs(now - date) / 1000;
-    const days = Math.floor(diffInSeconds / 86400);
-    const hours = Math.floor(diffInSeconds / 3600) % 24;
-    const minutes = Math.floor(diffInSeconds / 60) % 60;
-
-    if (days > 0) {
-      return `${days}d`;
-    } else if (hours > 0) {
-      return `${hours}h`;
-    } else if (minutes > 0) {
-      return `${minutes}m`;
-    } else {
-      return "now";
-    }
-  };
 
   const handleFollow = () => {
     if (!following) {

@@ -121,7 +121,7 @@ function WoofCard(props) {
             {props.rewoofs &&
             handleLocation() &&
             Object.keys(props.rewoofs).includes(user.uid) ? (
-              <span className="flex gap-2 ml-5 my-1">
+              <span className="flex gap-2 ml-5 my-1 cursor-default">
                 <HiArrowUturnRight className="w-4 h-4 text-orange-400" />
                 <p className="text-xs mr-3 text-orange-400">You rewoofed</p>
               </span>
@@ -129,7 +129,7 @@ function WoofCard(props) {
               props.profileUsername &&
               props.profileId &&
               Object.keys(props.rewoofs).includes(props.profileId) ? (
-              <span className="flex gap-2 ml-5 my-1">
+              <span className="flex gap-2 ml-5 my-1 cursor-default">
                 <HiArrowUturnRight className="w-4 h-4 text-orange-400" />
                 <p className="text-xs mr-3 text-orange-400">
                   @{props.profileUsername} rewoofed

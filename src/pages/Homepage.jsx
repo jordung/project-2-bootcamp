@@ -4,6 +4,7 @@ import WoofCard from "../components/WoofCard";
 import ComposeWoof from "./ComposeWoof";
 import { useContext } from "react";
 import { UserContext, WoofsContext } from "../App";
+import formatTime from "../utils/FormatDate";
 
 function Homepage() {
   const { user, userinfo } = useContext(UserContext);
@@ -16,24 +17,6 @@ function Homepage() {
     followedUsers = Object.keys(userinfo.following);
     followedUsers.push(user.uid);
   }
-
-  const formatTime = (date) => {
-    const now = new Date();
-    const diffInSeconds = Math.abs(now - date) / 1000;
-    const days = Math.floor(diffInSeconds / 86400);
-    const hours = Math.floor(diffInSeconds / 3600) % 24;
-    const minutes = Math.floor(diffInSeconds / 60) % 60;
-
-    if (days > 0) {
-      return `${days}d`;
-    } else if (hours > 0) {
-      return `${hours}h`;
-    } else if (minutes > 0) {
-      return `${minutes}m`;
-    } else {
-      return "now";
-    }
-  };
 
   return (
     <div className="bg-white min-h-screen flex flex-col justify-start items-start">
