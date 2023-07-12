@@ -63,7 +63,7 @@ function Explore() {
 
   useEffect(() => {
     const apiKey = process.env.REACT_APP_NEWS_API_KEY;
-    const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=50`;
+    const url = `https://newsapi.org/v2/top-headlines?country=sg&apiKey=${apiKey}&pageSize=30`;
 
     axios
       .get(url)
@@ -107,7 +107,7 @@ function Explore() {
             >
               <ToolTip show={showToolTip === index} text={user.username} />
               <img
-                className="w-16 h-16 rounded md:h-24 md:w-24"
+                className="w-16 h-16 rounded md:h-24 md:w-24 object-cover"
                 src={user.profilePicture}
                 alt="Medium avatar"
               />

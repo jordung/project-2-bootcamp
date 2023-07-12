@@ -201,17 +201,20 @@ function CommentModal({ setCommentModal, props }) {
                         {comment.comment}
                       </div>
                     </div>
-                    <div className="flex gap-2 ml-auto group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
-                      <button
-                        onClick={() => handleDeleteComment(comment.key)}
-                        className="focus:outline-none"
-                      >
-                        <GoTrash
-                          className="w-4 h-4 hover:text-red-400 transition duration-300 
+                    {userinfo.userId === userData[comment.fromUserId].userId ||
+                    userinfo.userId === props.user ? (
+                      <div className="flex gap-2 ml-auto group hover:bg-gray-50 p-1 rounded-lg cursor-pointer transition-all duration-300">
+                        <button
+                          onClick={() => handleDeleteComment(comment.key)}
+                          className="focus:outline-none"
+                        >
+                          <GoTrash
+                            className="w-4 h-4 hover:text-red-400 transition duration-300 
                       ease-in-out cursor-pointer"
-                        />
-                      </button>
-                    </div>
+                          />
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 ))
               ) : (
